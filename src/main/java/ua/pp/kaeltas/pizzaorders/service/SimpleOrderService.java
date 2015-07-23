@@ -6,7 +6,6 @@ import java.util.List;
 import ua.pp.kaeltas.pizzaorders.domain.Customer;
 import ua.pp.kaeltas.pizzaorders.domain.Order;
 import ua.pp.kaeltas.pizzaorders.domain.Pizza;
-import ua.pp.kaeltas.pizzaorders.infrastructure.ObjectFactory;
 import ua.pp.kaeltas.pizzaorders.repository.OrderRepository;
 import ua.pp.kaeltas.pizzaorders.repository.PizzaRepository;
 
