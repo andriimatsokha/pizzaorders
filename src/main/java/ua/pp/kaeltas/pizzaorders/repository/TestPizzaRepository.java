@@ -9,11 +9,7 @@ import ua.pp.kaeltas.pizzaorders.domain.PizzaType;
 
 public class TestPizzaRepository implements PizzaRepository {
 
-	private List<Pizza> pizzas = Arrays.asList(
-			new Pizza[] {
-					new Pizza(1, "Four Cheese", 55, PizzaType.VEGETARIAN),
-					new Pizza(2, "Mussles", 66, PizzaType.SEA),
-					new Pizza(3, "Four Meats", 77, PizzaType.MEAT)});
+	private List<Pizza> pizzas;
 	
 	/* (non-Javadoc)
 	 * @see ua.pp.kaeltas.pizzaorders.repository.PizzaRepository#getPizzaByID(java.lang.Integer)
@@ -27,6 +23,17 @@ public class TestPizzaRepository implements PizzaRepository {
 		}
 		
 		throw new NoSuchElementException();
+	}
+	
+	public void init() {
+		
+		pizzas = Arrays.asList(
+				new Pizza[] {
+						new Pizza(1, "Four Cheese", 55, PizzaType.VEGETARIAN),
+						new Pizza(2, "Mussles", 66, PizzaType.SEA),
+						new Pizza(3, "Four Meats", 77, PizzaType.MEAT)
+						});
+		
 	}
 	
 }
