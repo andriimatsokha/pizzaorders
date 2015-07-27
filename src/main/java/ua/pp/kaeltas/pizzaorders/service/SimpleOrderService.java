@@ -6,6 +6,7 @@ import java.util.List;
 import ua.pp.kaeltas.pizzaorders.domain.Customer;
 import ua.pp.kaeltas.pizzaorders.domain.Order;
 import ua.pp.kaeltas.pizzaorders.domain.Pizza;
+import ua.pp.kaeltas.pizzaorders.infrastructure.Benchmark;
 import ua.pp.kaeltas.pizzaorders.repository.OrderRepository;
 import ua.pp.kaeltas.pizzaorders.repository.PizzaRepository;
 
@@ -15,7 +16,6 @@ public class SimpleOrderService implements OrderService {
 	
 	private PizzaRepository pizzaRepository;
 	private OrderRepository orderRepository;
-	
 	
 	
 	public SimpleOrderService(
@@ -38,6 +38,7 @@ public class SimpleOrderService implements OrderService {
 	 * @see ua.pp.kaeltas.pizzaorders.service.OrderService#placeNewOrder(ua.pp.kaeltas.pizzaorders.domain.Customer, java.lang.Integer)
 	 */
 	@Override
+	@Benchmark
 	public Order placeNewOrder(Customer customer, Integer ... pizzasID) {
         List<Pizza> pizzas = new ArrayList<>();
        
@@ -50,7 +51,6 @@ public class SimpleOrderService implements OrderService {
         return newOrder;
     }
 
-	
 
 	
 }

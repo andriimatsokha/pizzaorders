@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ua.pp.kaeltas.pizzaorders.domain.Order;
+import ua.pp.kaeltas.pizzaorders.infrastructure.Benchmark;
 
 public class TestOrderRepository implements OrderRepository {
 
@@ -13,6 +14,7 @@ public class TestOrderRepository implements OrderRepository {
 	 * @see ua.pp.kaeltas.pizzaorders.repository.OrderRepository#saveOrder(ua.pp.kaeltas.pizzaorders.domain.Order)
 	 */
 	@Override
+	@Benchmark
 	public void saveOrder(Order newOrder) {
 		newOrder.setId(orders.size());
 		
