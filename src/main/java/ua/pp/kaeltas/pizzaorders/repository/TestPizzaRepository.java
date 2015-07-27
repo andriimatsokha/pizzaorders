@@ -25,15 +25,23 @@ public class TestPizzaRepository implements PizzaRepository {
 		throw new NoSuchElementException();
 	}
 	
-	public void init() {
-		
-		pizzas = Arrays.asList(
-				new Pizza[] {
-						new Pizza(1, "Four Cheese", 55, PizzaType.VEGETARIAN),
-						new Pizza(2, "Mussles", 66, PizzaType.SEA),
-						new Pizza(3, "Four Meats", 77, PizzaType.MEAT)
-						});
-		
+	
+	
+	public void setPizzas(List<Pizza> pizzas) {
+		this.pizzas = pizzas;
 	}
+
+
+
+//	public void init() {
+//		
+//		pizzas = Arrays.asList(
+//				new Pizza[] {
+//						new Pizza(1, "Four Cheese", 55, PizzaType.VEGETARIAN),
+//						new Pizza(2, "Mussels", 66, PizzaType.SEA),
+//						new Pizza(3, "Four Meats", 77, PizzaType.MEAT)
+//						});
+//		
+//	}
 	
 }

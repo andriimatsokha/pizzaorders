@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
         
         
-	<bean name="pizzaRepository" init-method="init" class="ua.pp.kaeltas.pizzaorders.repository.TestPizzaRepository"/>
+	<bean name="pizzaRepository" class="ua.pp.kaeltas.pizzaorders.repository.TestPizzaRepository">
+		<property name="pizzas">
+			<list>
+				<bean class="ua.pp.kaeltas.pizzaorders.domain.Pizza">
+					<constructor-arg> <value>1</value> </constructor-arg>
+					<constructor-arg> <value>"Four Cheese"</value> </constructor-arg>
+					<constructor-arg><value>55</value> </constructor-arg>
+					<constructor-arg> <value>VEGETARIAN</value> </constructor-arg>
+				</bean>
+				
+				<bean class="ua.pp.kaeltas.pizzaorders.domain.Pizza">
+					<constructor-arg> <value>2</value> </constructor-arg>
+					<constructor-arg> <value>"Mussels"</value> </constructor-arg>
+					<constructor-arg><value>66</value> </constructor-arg>
+					<constructor-arg> <value>SEA</value> </constructor-arg>
+				</bean>
+				
+				<bean class="ua.pp.kaeltas.pizzaorders.domain.Pizza">
+					<constructor-arg> <value>3</value> </constructor-arg>
+					<constructor-arg> <value>"Four Meat"</value> </constructor-arg>
+					<constructor-arg><value>77</value> </constructor-arg>
+					<constructor-arg> <value>MEAT</value> </constructor-arg>
+				</bean>
+			</list>
+		</property>
+	
+	</bean>
 	<bean name="orderRepository" class="ua.pp.kaeltas.pizzaorders.repository.TestOrderRepository"/>
     
     <bean name="orderService" class="ua.pp.kaeltas.pizzaorders.service.SimpleOrderService">
