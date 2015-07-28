@@ -4,15 +4,22 @@ import java.util.List;
 
 public class Order {
 
+	static int stId = 10;
+	
 	private int id;
+	
+	private String name;
 	
 	private Customer customer;
 	
 	private List<Pizza> pizzas;
 	
+	public Order() {
+		//id = (int)new Date().getTime();
+		name = "" + stId++;
+	}
 
 	public Order(Customer customer, List<Pizza> pizzas) {
-		super();
 		this.customer = customer;
 		this.pizzas = pizzas;
 	}
@@ -43,10 +50,12 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", customer=" + customer + ", pizzas="
+		return "Order [id=" + id + ", name = " + name + ", customer=" + customer + ", pizzas="
 				+ pizzas + "]";
 	}
 	
-	
+	public void destroy() {
+		System.out.println("---destroy ");
+	}
 	
 }

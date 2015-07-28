@@ -10,8 +10,13 @@ import ua.pp.kaeltas.pizzaorders.service.OrderService;
 public class SpringPizzaApp {
 
 	public static void main(String[] args) {
+		ConfigurableApplicationContext repositoryContext
+			= new ClassPathXmlApplicationContext("repositoryContext.xml");
+		
 		ConfigurableApplicationContext appContext
-			= new ClassPathXmlApplicationContext("appContext.xml");
+		= new ClassPathXmlApplicationContext(
+				new String[] {"appContext.xml"}, 
+				repositoryContext);
 		
 		//PizzaRepository pizzaRepository = 
 		//		(PizzaRepository) appContext.getBean("pizzaRepository");
@@ -31,11 +36,21 @@ public class SpringPizzaApp {
         
         //System.out.println(orderService);
         
-		order = orderService.placeNewOrder(customer, 1, 2);
-        System.out.println(order);
+		Order order1 = orderService.placeNewOrder(customer, 1, 2);
+		Order order2 = orderService.placeNewOrder(customer, 1, 2);
+		Order order3 = orderService.placeNewOrder(customer, 1, 2);
+        System.out.println(order1);
+        System.out.println(order2);
+        System.out.println(order3);
+        
+//        System.out.println(appContext.getBean("order", Order.class).toString());
+//        System.out.println(appContext.getBean("order", Order.class).toString());
+//        
+//        System.out.println(appContext.getBean("order", Order.class).toString());
 		
 		
 		appContext.close();
+		repositoryContext.close();
 	}
 
 }

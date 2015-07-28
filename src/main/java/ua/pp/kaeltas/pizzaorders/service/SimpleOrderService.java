@@ -3,6 +3,10 @@ package ua.pp.kaeltas.pizzaorders.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
 import ua.pp.kaeltas.pizzaorders.domain.Customer;
 import ua.pp.kaeltas.pizzaorders.domain.Order;
 import ua.pp.kaeltas.pizzaorders.domain.Pizza;
@@ -13,6 +17,7 @@ import ua.pp.kaeltas.pizzaorders.repository.PizzaRepository;
 public class SimpleOrderService implements OrderService {
 	
 	//private ObjectFactory objectFactory = ObjectFactory.getInstance();
+	//private ApplicationContext appContext;
 	
 	private PizzaRepository pizzaRepository;
 	private OrderRepository orderRepository;
@@ -45,11 +50,29 @@ public class SimpleOrderService implements OrderService {
         for(Integer id : pizzasID){
             pizzas.add(pizzaRepository.getPizzaByID(id));  // get Pizza from predifined in-memory list
         }
-        Order newOrder = new Order(customer, pizzas);
+        Order newOrder = getNewOrder();
+        newOrder.setCustomer(customer);
+        newOrder.setPizzas(pizzas);
        
         orderRepository.saveOrder(newOrder);  // set Order Id and save Order to in-memory list
         return newOrder;
     }
+
+
+
+	protected Order getNewOrder() {
+		return null;
+//		Order newOrder = appContext.getBean("order", Order.class);
+//		return newOrder;
+	}
+
+
+
+//	@Override
+//	public void setApplicationContext(ApplicationContext ac)
+//			throws BeansException {
+//		this.appContext = ac;
+//	}
 
 
 	

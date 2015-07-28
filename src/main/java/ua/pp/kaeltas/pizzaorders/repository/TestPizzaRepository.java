@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 
 import ua.pp.kaeltas.pizzaorders.domain.Pizza;
 import ua.pp.kaeltas.pizzaorders.domain.PizzaType;
+import ua.pp.kaeltas.pizzaorders.infrastructure.Benchmark;
 
 public class TestPizzaRepository implements PizzaRepository {
 
@@ -16,6 +17,7 @@ public class TestPizzaRepository implements PizzaRepository {
 	 * @see ua.pp.kaeltas.pizzaorders.repository.PizzaRepository#getPizzaByID(java.lang.Integer)
 	 */
 	@Override
+	@Benchmark
 	public Pizza getPizzaByID(Integer id) {
 		for (Pizza p : pizzas) {
 			if (p.getId() == id) {

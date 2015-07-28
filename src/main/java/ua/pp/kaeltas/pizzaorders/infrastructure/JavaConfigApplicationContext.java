@@ -28,8 +28,8 @@ public class JavaConfigApplicationContext implements ApplicationContext {
 		
 		BeanBuilder builder = new BeanBuilder(beanName);
 		builder.createObject();
-		builder.createProxy();
 		builder.callInitMethod();
+		builder.createProxy();
 		
 		return builder.getObject();
 		
@@ -118,6 +118,7 @@ public class JavaConfigApplicationContext implements ApplicationContext {
 			Class<?> clazz = obj.getClass();
 			
 			try {
+				System.out.println("-----INIT " + clazz);
 				Method method = clazz.getMethod("init");
 				method.invoke(obj);
 			} catch (NoSuchMethodException exception) {
@@ -132,52 +133,11 @@ public class JavaConfigApplicationContext implements ApplicationContext {
 		
 		public void createProxy() {
 			
-			Class<?> clazz = obj.getClass();
-			for (Method m : clazz.getMethods()) {
-				if (m.isAnnotationPresent(Benchmark.class)) {
-					obj = createProxyObj(obj);
-				}
-			}
-			
-			
-			
+			ProxyForBenchmarkAnnotation proxyForBenchmarkAnnotation 
+				= new ProxyForBenchmarkAnnotation();
+			obj = proxyForBenchmarkAnnotation.checkAndCreateProxyObjectBenchmark(obj);
 		}
-		
-		private Object createProxyObj(final Object o) {
-			final Class<?> type = o.getClass();
-			
-			return Proxy.newProxyInstance(
-					type.getClassLoader(), 
-					type.getInterfaces(), 
-					new InvocationHandler() {
-						
-						@Override
-						public Object invoke(
-								Object proxy, 
-								Method method, 
-								Object[] args) throws Throwable {
-							
-							if (type.getMethod(method.getName(), method.getParameterTypes())
-									.isAnnotationPresent(Benchmark.class)) {
-							
-								System.out.println("Benchmark start: " + method.getName());
-					
-								long nanoTimeStart = System.nanoTime();
-								Object retVal = method.invoke(o, args);
-								long nanoTimeResult = System.nanoTime() - nanoTimeStart;
-								
-								System.out.println("Result: " + nanoTimeResult);
-								System.out.println("Benchmark finished: " + method.getName());
-								
-								return retVal;
-							} else {
-								return method.invoke(o, args);
-							}
-						}
-					});
-			
-			//return null;
-		}
+
 		
 	}
 
