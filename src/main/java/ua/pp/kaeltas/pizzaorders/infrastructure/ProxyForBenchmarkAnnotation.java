@@ -3,6 +3,9 @@ package ua.pp.kaeltas.pizzaorders.infrastructure;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ProxyForBenchmarkAnnotation {
 
@@ -20,9 +23,17 @@ public class ProxyForBenchmarkAnnotation {
 	private Object createProxyObj(final Object o) {
 		final Class<?> type = o.getClass();
 		
+		//>>>Added for compatibility with proxy, added by Spring's <lookup-method>
+		Set<Class<?>> interfaces = new HashSet<>();
+		interfaces.addAll(Arrays.asList(type.getInterfaces()));
+		for (Method m : type.getMethods()) {
+			interfaces.addAll(Arrays.asList(m.getDeclaringClass().getInterfaces()));
+		}
+		//<<<Added for compatibility with proxy, added by Spring's <lookup-method>
+		
 		return Proxy.newProxyInstance(
 				type.getClassLoader(), 
-				type.getInterfaces(), 
+				interfaces.toArray(new Class[0]), 
 				new InvocationHandler() {
 					
 					@Override

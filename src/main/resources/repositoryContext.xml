@@ -33,4 +33,6 @@
 	</bean>
 	<bean name="orderRepository" class="ua.pp.kaeltas.pizzaorders.repository.TestOrderRepository"/> 
     
+    <bean class="ua.pp.kaeltas.pizzaorders.infrastructure.CustomAnnotationBeanPostProcessor"/>
+    
 </beans>

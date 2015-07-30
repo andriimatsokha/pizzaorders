@@ -3,10 +3,6 @@ package ua.pp.kaeltas.pizzaorders.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-
 import ua.pp.kaeltas.pizzaorders.domain.Customer;
 import ua.pp.kaeltas.pizzaorders.domain.Order;
 import ua.pp.kaeltas.pizzaorders.domain.Pizza;
@@ -14,7 +10,7 @@ import ua.pp.kaeltas.pizzaorders.infrastructure.Benchmark;
 import ua.pp.kaeltas.pizzaorders.repository.OrderRepository;
 import ua.pp.kaeltas.pizzaorders.repository.PizzaRepository;
 
-public class SimpleOrderService implements OrderService {
+public class SimpleOrderService implements OrderService/*, ApplicationContextAware*/ {
 	
 	//private ObjectFactory objectFactory = ObjectFactory.getInstance();
 	//private ApplicationContext appContext;
@@ -61,9 +57,11 @@ public class SimpleOrderService implements OrderService {
 
 
 	protected Order getNewOrder() {
-		return null;
-//		Order newOrder = appContext.getBean("order", Order.class);
-//		return newOrder;
+		throw new UnsupportedOperationException("This method must be overriden by Spring");
+		//return null;
+		//Order newOrder = appContext.getBean("order", Order.class);
+		//Order newOrder = new Order();
+		//return newOrder;
 	}
 
 

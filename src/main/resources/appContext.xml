@@ -14,5 +14,7 @@
     
     <bean name="order" class="ua.pp.kaeltas.pizzaorders.domain.Order" 
     	scope="prototype" />
+    	
+    <bean class="ua.pp.kaeltas.pizzaorders.infrastructure.CustomAnnotationBeanPostProcessor"/>
     
 </beans>
