@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.cglib.proxy.Enhancer;
+
 public class ProxyForBenchmarkAnnotation {
 
 	public Object checkAndCreateProxyObjectBenchmark(Object o) {
@@ -24,16 +26,27 @@ public class ProxyForBenchmarkAnnotation {
 		final Class<?> type = o.getClass();
 		
 		//>>>Added for compatibility with proxy, added by Spring's <lookup-method>
-		Set<Class<?>> interfaces = new HashSet<>();
-		interfaces.addAll(Arrays.asList(type.getInterfaces()));
-		for (Method m : type.getMethods()) {
-			interfaces.addAll(Arrays.asList(m.getDeclaringClass().getInterfaces()));
+		Class<?> [] interfacesAr;
+		
+		//solution1
+		if (Enhancer.isEnhanced(type)) {
+			interfacesAr = type.getSuperclass().getInterfaces();
+		} else {
+			interfacesAr = type.getInterfaces();
 		}
+		
+		//solution2
+//		Set<Class<?>> interfaces = new HashSet<>();
+//	    interfaces.addAll(Arrays.asList(type.getInterfaces()));
+//	    interfaces.addAll(Arrays.asList(type.getSuperclass().getInterfaces()));
+//	    interfacesAr = interfaces.toArray(new Class[0]);
+	    
+	    
 		//<<<Added for compatibility with proxy, added by Spring's <lookup-method>
 		
 		return Proxy.newProxyInstance(
 				type.getClassLoader(), 
-				interfaces.toArray(new Class[0]), 
+				interfacesAr,
 				new InvocationHandler() {
 					
 					@Override
