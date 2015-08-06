@@ -8,13 +8,12 @@ import ua.pp.kaeltas.pizzaorders.repository.PizzaRepository;
 public class SpringPizzaApp {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext repositoryContext
-			= new ClassPathXmlApplicationContext("repositoryContext.xml");
+//		ConfigurableApplicationContext repositoryContext
+//			= new ClassPathXmlApplicationContext("repositoryContext.xml");
 		
 		ConfigurableApplicationContext appContext
 			= new ClassPathXmlApplicationContext(
-					new String[] {"appContext.xml"}, 
-					repositoryContext);
+					new String[] {"appContext.xml"});
 		
 		PizzaRepository pizzaRepository = 
 				appContext.getBean(PizzaRepository.class);
@@ -62,7 +61,7 @@ public class SpringPizzaApp {
 		
 		
 		appContext.close();
-		repositoryContext.close();
+		//repositoryContext.close();
 	}
 
 }

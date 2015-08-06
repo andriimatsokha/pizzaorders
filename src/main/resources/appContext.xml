@@ -11,6 +11,7 @@
     <context:annotation-config/>
     
     <context:component-scan base-package="ua.pp.kaeltas.pizzaorders.repository"/>
+    <context:component-scan base-package="ua.pp.kaeltas.pizzaorders.repository"/>
         
     <bean name="orderService" 
     	class="ua.pp.kaeltas.pizzaorders.service.SimpleOrderService"
