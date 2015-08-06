@@ -46,5 +46,21 @@ public class TestPizzaRepository implements PizzaRepository {
 						});
 		
 	}
+
+
+
+	@Override
+	public void savePizza(Pizza pizza) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public List<Pizza> getAllPizzas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

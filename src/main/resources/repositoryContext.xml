@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
         
         
-	<bean name="pizzaRepository" class="ua.pp.kaeltas.pizzaorders.repository.TestPizzaRepository">
+	<!-- <bean name="pizzaRepository" class="ua.pp.kaeltas.pizzaorders.repository.TestPizzaRepository">
 		<property name="pizzas">
 			<list>
 				<bean class="ua.pp.kaeltas.pizzaorders.domain.Pizza">
@@ -30,7 +30,10 @@
 			</list>
 		</property>
 	
-	</bean>
+	</bean> -->
+	
+	
+	
 	<bean name="orderRepository" class="ua.pp.kaeltas.pizzaorders.repository.TestOrderRepository"/> 
     
     <bean class="ua.pp.kaeltas.pizzaorders.infrastructure.CustomAnnotationBeanPostProcessor"/>
