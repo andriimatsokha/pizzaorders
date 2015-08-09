@@ -9,5 +9,6 @@ public interface PizzaRepository {
 	public abstract Pizza getPizzaByID(Integer id);
 	public abstract void savePizza(Pizza pizza);
 	public List<Pizza> getAllPizzas();
+	public abstract void createDefaultPizzas();
 
 }

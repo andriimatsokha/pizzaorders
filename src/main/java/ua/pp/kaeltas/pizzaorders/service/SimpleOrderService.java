@@ -1,8 +1,10 @@
 package ua.pp.kaeltas.pizzaorders.service;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import ua.pp.kaeltas.pizzaorders.domain.Address;
 import ua.pp.kaeltas.pizzaorders.domain.Customer;
 import ua.pp.kaeltas.pizzaorders.domain.Order;
 import ua.pp.kaeltas.pizzaorders.domain.Pizza;
@@ -40,16 +42,24 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
 	 */
 	@Override
 	@Benchmark
-	public Order placeNewOrder(Customer customer, Integer ... pizzasID) {
-        List<Pizza> pizzas = new ArrayList<>();
-       
+	public Order placeNewOrder(Customer customer, Address address, Integer ... pizzasID) {
+        Map<Pizza, Integer> pizzas = new HashMap<>();
+        
         for(Integer id : pizzasID){
-            pizzas.add(pizzaRepository.getPizzaByID(id));  // get Pizza from predifined in-memory list
+        	Pizza p = pizzaRepository.getPizzaByID(id);
+        	if (pizzas.containsKey(p)) {
+        		pizzas.put(p, pizzas.get(p)+1);
+        	} else {
+        		pizzas.put(p, 1);
+        	}
         }
         Order newOrder = getNewOrder();
         newOrder.setCustomer(customer);
         newOrder.setPizzas(pizzas);
-       
+        newOrder.setAddress(address);
+        
+        System.out.println("address="+address);
+        
         orderRepository.saveOrder(newOrder);  // set Order Id and save Order to in-memory list
         return newOrder;
     }
@@ -62,6 +72,13 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
 		//Order newOrder = appContext.getBean("order", Order.class);
 		//Order newOrder = new Order();
 		//return newOrder;
+	}
+
+
+
+	@Override
+	public List<Order> getAllOrders() {
+		return orderRepository.getAllOrders();
 	}
 
 

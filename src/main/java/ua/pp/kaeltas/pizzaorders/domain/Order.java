@@ -1,25 +1,53 @@
 package ua.pp.kaeltas.pizzaorders.domain;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.Table;
+
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Entity
+@Table(name="orders")
+@Component
+@Scope(value=BeanDefinition.SCOPE_PROTOTYPE)
 public class Order {
 
-	static int stId = 10;
-	
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
 	
-	private String name;
-	
+	@ManyToOne
+	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
-	private List<Pizza> pizzas;
+	//private List<Pizza> pizzas;
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="ORDER_PIZZA")
+	@MapKeyJoinColumn(name="pizza_id")
+	@Column(name="count")
+	private Map<Pizza, Integer> pizzas;
+	
+	@ManyToOne
+	@JoinColumn(name="address_id")
+	private Address address;
 	
 	public Order() {
-		//id = (int)new Date().getTime();
-		name = "" + stId++;
 	}
 
-	public Order(Customer customer, List<Pizza> pizzas) {
+	public Order(Customer customer, Map<Pizza, Integer> pizzas) {
 		this.customer = customer;
 		this.pizzas = pizzas;
 	}
@@ -32,11 +60,11 @@ public class Order {
 		this.id = id;
 	}
 
-	public List<Pizza> getPizzas() {
+	public Map<Pizza, Integer> getPizzas() {
 		return pizzas;
 	}
 
-	public void setPizzas(List<Pizza> pizzas) {
+	public void setPizzas(Map<Pizza, Integer> pizzas) {
 		this.pizzas = pizzas;
 	}
 
@@ -47,10 +75,18 @@ public class Order {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", name = " + name + ", customer=" + customer + ", pizzas="
+		return "Order [id=" + id + ", customer=" + customer + ", pizzas="
 				+ pizzas + "]";
 	}
 	

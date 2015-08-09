@@ -27,8 +27,8 @@ public class PizzaApp {
         
         //System.out.println(orderService);
         
-		order = orderService.placeNewOrder(customer, 1, 2);
-        System.out.println(order);
+		//order = orderService.placeNewOrder(customer, 1, 2);
+        //System.out.println(order);
     }
 	
 }

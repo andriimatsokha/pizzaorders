@@ -3,7 +3,14 @@ package ua.pp.kaeltas.pizzaorders;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import ua.pp.kaeltas.pizzaorders.domain.Address;
+import ua.pp.kaeltas.pizzaorders.domain.Customer;
+import ua.pp.kaeltas.pizzaorders.domain.Order;
+import ua.pp.kaeltas.pizzaorders.repository.AddressRepository;
+import ua.pp.kaeltas.pizzaorders.repository.CustomerRepository;
+import ua.pp.kaeltas.pizzaorders.repository.OrderRepository;
 import ua.pp.kaeltas.pizzaorders.repository.PizzaRepository;
+import ua.pp.kaeltas.pizzaorders.service.OrderService;
 
 public class SpringPizzaApp {
 
@@ -18,19 +25,10 @@ public class SpringPizzaApp {
 		PizzaRepository pizzaRepository = 
 				appContext.getBean(PizzaRepository.class);
 		
-//		Pizza pizza = new Pizza();
-//		pizza.setName("4 Meat");
-//		pizza.setPrice(66);
-//		pizza.setType(PizzaType.MEAT);
-//		pizzaRepository.savePizza(pizza);
-//		
-//		Pizza pizza2 = new Pizza();
-//		pizza2.setName("4 Cheese");
-//		pizza2.setPrice(54);
-//		pizza2.setType(PizzaType.VEGETARIAN);
-//		pizzaRepository.savePizza(pizza2);
+		pizzaRepository.createDefaultPizzas();
 		
 		System.out.println("Pizzas: " + pizzaRepository.getAllPizzas());
+		
 		
 		//System.out.println(pizzaRepository);
 		
@@ -40,19 +38,37 @@ public class SpringPizzaApp {
 		//	System.out.println(s);
 		//}
 		
+		CustomerRepository customerRepository = appContext.getBean(CustomerRepository.class);
 		
-//		Customer customer = new Customer(1, "Paddy");        
-//        Order order;
-//        OrderService orderService = appContext.getBean("orderService", OrderService.class);
+		Customer customer = new Customer("Paddy");
+		
+		customerRepository.saveCustomer(customer);
+		
+        Order order;
+        OrderService orderService = appContext.getBean(OrderService.class);
 //        
 //        //System.out.println(orderService);
 //        
-//		Order order1 = orderService.placeNewOrder(customer, 1, 2);
-//		Order order2 = orderService.placeNewOrder(customer, 1, 2);
-//		Order order3 = orderService.placeNewOrder(customer, 1, 2);
-//        System.out.println(order1);
-//        System.out.println(order2);
-//        System.out.println(order3);
+        
+        Address address = new Address();
+        address.setStreet("new Street");
+        address.setHouseNumber("12");
+        
+        AddressRepository addressRepository = appContext.getBean(AddressRepository.class);
+        addressRepository.saveAddress(address);
+        
+		Order order1 = orderService.placeNewOrder(customer, address, 10, 12);
+		Order order2 = orderService.placeNewOrder(customer, address, 11, 12, 12);
+		Order order3 = orderService.placeNewOrder(customer, address, 10, 11, 11, 10, 10, 12);
+        System.out.println(order1);
+        System.out.println(order2);
+        System.out.println(order3);
+        
+        
+        System.out.println("ORDERS FROM DB:");
+        for (Order o : orderService.getAllOrders()) {
+        	System.out.println(o);
+        }
         
 //        System.out.println(appContext.getBean("order", Order.class).toString());
 //        System.out.println(appContext.getBean("order", Order.class).toString());

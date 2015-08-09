@@ -62,5 +62,13 @@ public class TestPizzaRepository implements PizzaRepository {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+	@Override
+	public void createDefaultPizzas() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
