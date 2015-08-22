@@ -42,7 +42,15 @@ public class TotalOrderPriceCalculator {
 			orderPrice += pizza.getPrice() * pizzaCount;
 		}
 		
-		return orderPrice - calculatePizzaDiscount(pizzas) - discountCalculator.calculateDiscount(orderPrice, accumulativeCardSum);
+		int result = orderPrice;
+		result -= calculatePizzaDiscount(pizzas);
+		result -= discountCalculator.calculateDiscount(orderPrice, accumulativeCardSum);
+		
+		if (result < 0) {
+			throw new RuntimeException("Total order price < 0");
+		}
+		
+		return result;
 	}
 	
 

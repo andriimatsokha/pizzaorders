@@ -6,9 +6,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:/appContext.xml"})
+@TransactionConfiguration(transactionManager="transactionManager",
+		defaultRollback = true)
 public class TotalOrderPriceCalculatorTest {
 
+	@Autowired
+	TotalOrderPriceCalculator totalOrderCostCalculator;
+	
 	@Test(expected = IllegalArgumentException.class)
 	public void testCalculateTotalOrderPriceWithZeroPizzaThrowException() throws Exception {
 		Map<Pizza, Integer> pizzas = new HashMap<Pizza, Integer>();
@@ -40,9 +53,9 @@ public class TotalOrderPriceCalculatorTest {
 		pizzas.put(new Pizza(1, "4Cheese", pizzaPrice, PizzaType.VEGETARIAN), 1);
 		int expectedOrderPrice = 56;
 		
-		TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
+//		TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
 		int actualOrderPrice = totalOrderCostCalculator.calculateTotalOrderPrice(pizzas);
-		
+
 		assertEquals(expectedOrderPrice, actualOrderPrice);
 	}
 	
@@ -54,7 +67,7 @@ public class TotalOrderPriceCalculatorTest {
 		pizzas.put(new Pizza(2, "2Cheese", pizzaPrice, PizzaType.VEGETARIAN), 5);
 		int expectedOrderPrice = 95; //100 - 5(discount for max price pizza)
 		
-		TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
+		//TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
 		int actualOrderPrice = totalOrderCostCalculator.calculateTotalOrderPrice(pizzas);
 		
 		assertEquals(expectedOrderPrice, actualOrderPrice);
@@ -139,6 +152,6 @@ public class TotalOrderPriceCalculatorTest {
 		
 		assertEquals(expectedPizzaDiscount, actualPizzaDiscount);
 	}
-	
+
 	
 }
