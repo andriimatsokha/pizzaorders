@@ -11,11 +11,11 @@
     <context:annotation-config/>
     
     <context:component-scan base-package="ua.pp.kaeltas.pizzaorders.repository"/>
-    <context:component-scan base-package="ua.pp.kaeltas.pizzaorders.repository"/>
+    <context:component-scan base-package="ua.pp.kaeltas.pizzaorders.service"/>
         
     <bean name="orderService" 
-    	class="ua.pp.kaeltas.pizzaorders.service.SimpleOrderService"
-    	autowire="constructor">
+    	class="ua.pp.kaeltas.pizzaorders.service.SimpleOrderService">
+    	<!-- autowire="constructor" -->
     	<!-- <constructor-arg  ref="pizzaRepository"/>
     	<constructor-arg ref="orderRepository"/> -->
     	<lookup-method name="getNewOrder" bean="order"/>

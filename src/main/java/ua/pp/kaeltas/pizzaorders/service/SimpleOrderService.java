@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import ua.pp.kaeltas.pizzaorders.domain.AccumulativeCard;
 import ua.pp.kaeltas.pizzaorders.domain.Address;
 import ua.pp.kaeltas.pizzaorders.domain.Customer;
 import ua.pp.kaeltas.pizzaorders.domain.Order;
@@ -17,16 +22,25 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
 	//private ObjectFactory objectFactory = ObjectFactory.getInstance();
 	//private ApplicationContext appContext;
 	
+	@Autowired
 	private PizzaRepository pizzaRepository;
+	
+	@Autowired
 	private OrderRepository orderRepository;
 	
+	@Autowired
+	private AccumulativeCardService accumulativeCardService;
 	
-	public SimpleOrderService(
-			PizzaRepository pizzaRepository,
-			OrderRepository orderRepository) {
-		this.pizzaRepository = pizzaRepository;
-		this.orderRepository = orderRepository;
+	
+	public SimpleOrderService() {
+		
 	}
+//	public SimpleOrderService(
+//			PizzaRepository pizzaRepository,
+//			OrderRepository orderRepository) {
+//		this.pizzaRepository = pizzaRepository;
+//		this.orderRepository = orderRepository;
+//	}
 
 
 
@@ -42,8 +56,33 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
 	 */
 	@Override
 	@Benchmark
+	@Transactional
 	public Order placeNewOrder(Customer customer, Address address, Integer ... pizzasID) {
-        Map<Pizza, Integer> pizzas = new HashMap<>();
+        Map<Pizza, Integer> pizzas = createPizzasMapFromIds(pizzasID);
+        
+        Order newOrder = getNewOrder();
+        newOrder.setCustomer(customer);
+        newOrder.setPizzas(pizzas);
+        newOrder.setAddress(address);
+        
+        AccumulativeCard accumulativeCard = null;
+        synchronized(customer) {
+	        accumulativeCard = customer.getAccumulativeCard();
+	        if (accumulativeCard == null) {
+	        	accumulativeCard = accumulativeCardService.createNewAccumulativeCard(customer, address);
+	        }
+        }
+        
+        orderRepository.saveOrder(newOrder);  // set Order Id and save Order to in-memory list
+        accumulativeCardService.incrementTotalSum(accumulativeCard, pizzas);
+        
+        return newOrder;
+    }
+
+
+
+	private Map<Pizza, Integer> createPizzasMapFromIds(Integer... pizzasID) {
+		Map<Pizza, Integer> pizzas = new HashMap<>();
         
         for(Integer id : pizzasID){
         	Pizza p = pizzaRepository.getPizzaByID(id);
@@ -53,19 +92,10 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
         		pizzas.put(p, 1);
         	}
         }
-        Order newOrder = getNewOrder();
-        newOrder.setCustomer(customer);
-        newOrder.setPizzas(pizzas);
-        newOrder.setAddress(address);
-        
-        System.out.println("address="+address);
-        
-        orderRepository.saveOrder(newOrder);  // set Order Id and save Order to in-memory list
-        return newOrder;
-    }
-
-
-
+		return pizzas;
+	}
+	
+	
 	protected Order getNewOrder() {
 		throw new UnsupportedOperationException("This method must be overriden by Spring");
 		//return null;

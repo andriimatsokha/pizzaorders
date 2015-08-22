@@ -52,7 +52,7 @@ public class TotalOrderPriceCalculatorTest {
 		int pizzaPrice = 10;
 		pizzas.put(new Pizza(1, "4Cheese", pizzaPrice, PizzaType.VEGETARIAN), 5);
 		pizzas.put(new Pizza(2, "2Cheese", pizzaPrice, PizzaType.VEGETARIAN), 5);
-		int expectedOrderPrice = 95; //100 - 5(discharge for max price pizza)
+		int expectedOrderPrice = 95; //100 - 5(discount for max price pizza)
 		
 		TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
 		int actualOrderPrice = totalOrderCostCalculator.calculateTotalOrderPrice(pizzas);
@@ -80,7 +80,7 @@ public class TotalOrderPriceCalculatorTest {
 	}
 	
 	@Test
-	public void testCalculatePizzaDischargeWith5Pizzas() {
+	public void testCalculatePizzaDiscountWith5Pizzas() {
 		Map<Pizza, Integer> pizzas = new HashMap<>();
 		int pizzaPrice1 = 11;
 		int pizzaPrice2 = 22;
@@ -92,16 +92,16 @@ public class TotalOrderPriceCalculatorTest {
 		pizzas.put(new Pizza(3, "2Cheese", pizzaPrice3, PizzaType.VEGETARIAN), 1);
 		pizzas.put(new Pizza(4, "1Cheese", pizzaPrice4, PizzaType.VEGETARIAN), 1);
 		pizzas.put(new Pizza(5, "0Cheese", pizzaPrice5, PizzaType.VEGETARIAN), 1);
-		int expectedPizzaDischarge = 25;
+		int expectedPizzaDiscount = 25;
 		
 		TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
-		int actualPizzaDischarge = totalOrderCostCalculator.calculatePizzaDischarge(pizzas);
+		int actualPizzaDiscount = totalOrderCostCalculator.calculatePizzaDiscount(pizzas);
 		
-		assertEquals(expectedPizzaDischarge, actualPizzaDischarge);
+		assertEquals(expectedPizzaDiscount, actualPizzaDiscount);
 	}
 	
 	@Test
-	public void testCalculatePizzaDischargeWithTwoHighestPricePizzas() {
+	public void testCalculatePizzaDiscountWithTwoHighestPricePizzas() {
 		Map<Pizza, Integer> pizzas = new HashMap<>();
 		int pizzaPrice1 = 11;
 		int pizzaPrice2 = 22;
@@ -113,16 +113,16 @@ public class TotalOrderPriceCalculatorTest {
 		pizzas.put(new Pizza(3, "2Cheese", pizzaPrice3, PizzaType.VEGETARIAN), 1);
 		pizzas.put(new Pizza(4, "1Cheese", pizzaPrice4, PizzaType.VEGETARIAN), 1);
 		pizzas.put(new Pizza(5, "0Cheese", pizzaPrice5, PizzaType.VEGETARIAN), 1);
-		int expectedPizzaDischarge = 25;
+		int expectedPizzaDiscount = 25;
 		
 		TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
-		int actualPizzaDischarge = totalOrderCostCalculator.calculatePizzaDischarge(pizzas);
+		int actualPizzaDiscount = totalOrderCostCalculator.calculatePizzaDiscount(pizzas);
 		
-		assertEquals(expectedPizzaDischarge, actualPizzaDischarge);
+		assertEquals(expectedPizzaDiscount, actualPizzaDiscount);
 	}
 	
 	@Test
-	public void testCalculatePizzaDischargeWith4Pizzas() {
+	public void testCalculatePizzaDiscountWith4Pizzas() {
 		Map<Pizza, Integer> pizzas = new HashMap<>();
 		int pizzaPrice1 = 11;
 		int pizzaPrice2 = 22;
@@ -132,12 +132,12 @@ public class TotalOrderPriceCalculatorTest {
 		pizzas.put(new Pizza(2, "3Cheese", pizzaPrice2, PizzaType.VEGETARIAN), 1);
 		pizzas.put(new Pizza(3, "2Cheese", pizzaPrice3, PizzaType.VEGETARIAN), 1);
 		pizzas.put(new Pizza(4, "1Cheese", pizzaPrice4, PizzaType.VEGETARIAN), 1);
-		int expectedPizzaDischarge = 0;
+		int expectedPizzaDiscount = 0;
 		
 		TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
-		int actualPizzaDischarge = totalOrderCostCalculator.calculatePizzaDischarge(pizzas);
+		int actualPizzaDiscount = totalOrderCostCalculator.calculatePizzaDiscount(pizzas);
 		
-		assertEquals(expectedPizzaDischarge, actualPizzaDischarge);
+		assertEquals(expectedPizzaDiscount, actualPizzaDiscount);
 	}
 	
 	

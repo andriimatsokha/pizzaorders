@@ -2,6 +2,7 @@ package ua.pp.kaeltas.pizzaorders.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +19,7 @@ public class Customer {
 	
 	private String name;
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name="accumulativecard_id")
 	private AccumulativeCard accumulativeCard;
 
@@ -52,6 +53,25 @@ public class Customer {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public AccumulativeCard getAccumulativeCard() {
+		return accumulativeCard;
+	}
+
+	public void setAccumulativeCard(AccumulativeCard accumulativeCard) {
+		if (accumulativeCard.getCustomer() != this) {
+			accumulativeCard.setCustomer(this);
+		}
+		this.accumulativeCard = accumulativeCard;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 	@Override

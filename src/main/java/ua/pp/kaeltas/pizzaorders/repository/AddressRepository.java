@@ -4,6 +4,8 @@ import ua.pp.kaeltas.pizzaorders.domain.Address;
 
 public interface AddressRepository {
 
-	public abstract void saveAddress(Address address);
+	public abstract void save(Address address);
+
+	public abstract Address find(int id);
 	
 }

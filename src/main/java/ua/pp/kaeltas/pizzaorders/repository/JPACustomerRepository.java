@@ -16,8 +16,13 @@ public class JPACustomerRepository implements CustomerRepository {
 	
 	@Override
 	@Transactional
-	public void saveCustomer(Customer customer) {
+	public void save(Customer customer) {
 		em.persist(customer);
+	}
+
+	@Override
+	public Customer find(Integer id) {
+		return em.find(Customer.class, id);
 	}
 
 }

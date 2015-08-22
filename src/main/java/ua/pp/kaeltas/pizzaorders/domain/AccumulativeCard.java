@@ -1,5 +1,6 @@
 package ua.pp.kaeltas.pizzaorders.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,12 +19,10 @@ public class AccumulativeCard {
 	@JoinColumn(name="address_id")
 	private Address address;
 	
-	private Integer sumOfAllOrders;
+	private Integer sumOfAllOrders = 0;
 	
-	@OneToOne(mappedBy="accumulativeCard")
+	@OneToOne(mappedBy="accumulativeCard", cascade = {CascadeType.MERGE})
 	private Customer customer;
-
-	
 	
 	public Address getAddress() {
 		return address;
@@ -40,12 +39,19 @@ public class AccumulativeCard {
 	public void setSumOfAllOrders(Integer sumOfAllOrders) {
 		this.sumOfAllOrders = sumOfAllOrders;
 	}
+	
+	public synchronized void incrementSumOfAllOrders(Integer sum) {
+		this.sumOfAllOrders += sum;
+	}
 
 	public Customer getCustomer() {
 		return customer;
 	}
 
 	public void setCustomer(Customer customer) {
+		if (customer.getAccumulativeCard() != this) {
+			customer.setAccumulativeCard(this);
+		}
 		this.customer = customer;
 	}
 

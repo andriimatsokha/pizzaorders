@@ -8,7 +8,6 @@ import ua.pp.kaeltas.pizzaorders.domain.Customer;
 import ua.pp.kaeltas.pizzaorders.domain.Order;
 import ua.pp.kaeltas.pizzaorders.repository.AddressRepository;
 import ua.pp.kaeltas.pizzaorders.repository.CustomerRepository;
-import ua.pp.kaeltas.pizzaorders.repository.OrderRepository;
 import ua.pp.kaeltas.pizzaorders.repository.PizzaRepository;
 import ua.pp.kaeltas.pizzaorders.service.OrderService;
 
@@ -42,7 +41,7 @@ public class SpringPizzaApp {
 		
 		Customer customer = new Customer("Paddy");
 		
-		customerRepository.saveCustomer(customer);
+		customerRepository.save(customer);
 		
         Order order;
         OrderService orderService = appContext.getBean(OrderService.class);
@@ -55,7 +54,7 @@ public class SpringPizzaApp {
         address.setHouseNumber("12");
         
         AddressRepository addressRepository = appContext.getBean(AddressRepository.class);
-        addressRepository.saveAddress(address);
+        addressRepository.save(address);
         
 		Order order1 = orderService.placeNewOrder(customer, address, 10, 12);
 		Order order2 = orderService.placeNewOrder(customer, address, 11, 12, 12);

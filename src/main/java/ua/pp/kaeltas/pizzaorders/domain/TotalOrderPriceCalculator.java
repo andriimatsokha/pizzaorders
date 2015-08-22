@@ -5,14 +5,14 @@ import java.util.Map.Entry;
 
 public class TotalOrderPriceCalculator {
 
-	private static final float DISCHARGE_PERCENT_FOR_HIGHEST_PRICE_PIZZA = 50f/100f;
-	private static final int PIZZA_COUNT_TO_GET_DISCHARGE = 4;
+	private static final float DISCOUNT_PERCENT_FOR_HIGHEST_PRICE_PIZZA = 50f/100f;
+	private static final int PIZZA_COUNT_TO_GET_DISCOUNT = 4;
 	private static final int MIN_COUNT_OF_PIZZAS_IN_ORDER = 1;
 	private static final int MAX_COUNT_OF_PIZZAS_IN_ORDER = 10;
 
 	/**
 	 * Constraints: order contains 1-10 pizzas, else - exception
-	 * If number of pizzas in order more than 4, then give discharge 50% to the highest price pizza 
+	 * If number of pizzas in order more than 4, then give discount 50% to the highest price pizza 
 	 * 
 	 * @param pizzas
 	 * @return sum of order
@@ -28,20 +28,20 @@ public class TotalOrderPriceCalculator {
 			orderPrice += pizza.getPrice() * pizzaCount;
 		}
 		
-		return orderPrice - calculatePizzaDischarge(pizzas);
+		return orderPrice - calculatePizzaDiscount(pizzas);
 	}
 	
 
-	int calculatePizzaDischarge(Map<Pizza, Integer> pizzas) {
+	int calculatePizzaDiscount(Map<Pizza, Integer> pizzas) {
 		int maxPizzaPrice = 0;
-		if (calcTotalPizzasCount(pizzas) > PIZZA_COUNT_TO_GET_DISCHARGE) {
+		if (calcTotalPizzasCount(pizzas) > PIZZA_COUNT_TO_GET_DISCOUNT) {
 			for(Entry<Pizza, Integer> entry : pizzas.entrySet()) {
 				Pizza pizza = entry.getKey();
 				maxPizzaPrice = Math.max(maxPizzaPrice, pizza.getPrice());
 			}
 		}
 		
-		return (int)(maxPizzaPrice*DISCHARGE_PERCENT_FOR_HIGHEST_PRICE_PIZZA);
+		return (int)(maxPizzaPrice*DISCOUNT_PERCENT_FOR_HIGHEST_PRICE_PIZZA);
 	}
 	
 	private int calcTotalPizzasCount(Map<Pizza, Integer> pizzas) {

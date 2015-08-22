@@ -73,6 +73,9 @@ public class Order {
 	}
 
 	public void setCustomer(Customer customer) {
+//		if (!customer.getOrders().contains(this)) {
+//			customer.getOrders().add(this);
+//		}
 		this.customer = customer;
 	}
 	

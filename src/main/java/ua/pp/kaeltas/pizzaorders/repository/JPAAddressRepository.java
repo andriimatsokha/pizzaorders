@@ -16,8 +16,13 @@ public class JPAAddressRepository implements AddressRepository {
 	
 	@Override
 	@Transactional
-	public void saveAddress(Address address) {
+	public void save(Address address) {
 		em.persist(address);
+	}
+
+	@Override
+	public Address find(int id) {
+		return em.find(Address.class, id);
 	}
 
 }
