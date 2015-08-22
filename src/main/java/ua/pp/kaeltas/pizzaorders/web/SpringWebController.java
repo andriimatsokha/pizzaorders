@@ -49,9 +49,9 @@ public class SpringWebController {
 		model.addAttribute("pizzas", pizzaRepository.getAllPizzas());
 		
 		
-//		Customer customer = customerRepository.find(20);
-//		Address address = addressRepository.find(30);
-//		orderService.placeNewOrder(customer, address, 10, 10, 10, 11);
+		Customer customer = customerRepository.find(20);
+		Address address = addressRepository.find(30);
+		orderService.placeNewOrder(customer, address, 10, 10, 10, 11);
 		
 		
 		return "helloSpring3";

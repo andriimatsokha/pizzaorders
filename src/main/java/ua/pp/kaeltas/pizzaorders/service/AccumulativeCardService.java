@@ -3,6 +3,7 @@ package ua.pp.kaeltas.pizzaorders.service;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Service;
 
 import ua.pp.kaeltas.pizzaorders.domain.AccumulativeCard;
@@ -31,12 +32,20 @@ public class AccumulativeCardService {
 	}
 	
 	public void incrementTotalSum(AccumulativeCard accumulativeCard, Map<Pizza, Integer> pizzas) {
-		TotalOrderPriceCalculator totalOrderPriceCalculator = new TotalOrderPriceCalculator();
+//		TotalOrderPriceCalculator totalOrderPriceCalculator = new TotalOrderPriceCalculator();
+//		int totalPrice = totalOrderPriceCalculator.calculateTotalOrderPrice(pizzas);
+		
+		TotalOrderPriceCalculator totalOrderPriceCalculator = getNewTotalOrderPriceCalculator(accumulativeCard.getSumOfAllOrders());
 		int totalPrice = totalOrderPriceCalculator.calculateTotalOrderPrice(pizzas);
 		
 		accumulativeCard.incrementSumOfAllOrders(totalPrice);
 		
 		accumulativeCardRepository.update(accumulativeCard);
+	}
+	
+	@Lookup
+	protected TotalOrderPriceCalculator getNewTotalOrderPriceCalculator(int accumulativeCardSum) {
+		throw new UnsupportedOperationException();
 	}
 	
 }

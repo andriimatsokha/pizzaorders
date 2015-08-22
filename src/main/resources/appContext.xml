@@ -12,6 +12,9 @@
     
     <context:component-scan base-package="ua.pp.kaeltas.pizzaorders.repository"/>
     <context:component-scan base-package="ua.pp.kaeltas.pizzaorders.service"/>
+    <context:component-scan base-package="ua.pp.kaeltas.pizzaorders.domain"/>
+        
+    <bean name="discountCalculator" class="ua.pp.kaeltas.pizzaorders.domain.PercentOfTotalOrderDiscountCalculator"/>
         
     <bean name="orderService" 
     	class="ua.pp.kaeltas.pizzaorders.service.SimpleOrderService">
@@ -45,6 +48,7 @@
     <bean name="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
     	<property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
+    
     
     
 </beans>

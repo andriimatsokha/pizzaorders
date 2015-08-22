@@ -3,6 +3,13 @@ package ua.pp.kaeltas.pizzaorders.domain;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 public class TotalOrderPriceCalculator {
 
 	private static final float DISCOUNT_PERCENT_FOR_HIGHEST_PRICE_PIZZA = 50f/100f;
@@ -10,13 +17,20 @@ public class TotalOrderPriceCalculator {
 	private static final int MIN_COUNT_OF_PIZZAS_IN_ORDER = 1;
 	private static final int MAX_COUNT_OF_PIZZAS_IN_ORDER = 10;
 
-	/**
-	 * Constraints: order contains 1-10 pizzas, else - exception
-	 * If number of pizzas in order more than 4, then give discount 50% to the highest price pizza 
-	 * 
-	 * @param pizzas
-	 * @return sum of order
-	 */
+	@Autowired
+	private DiscountCalculator discountCalculator;
+	
+	private int accumulativeCardSum;
+	
+	public TotalOrderPriceCalculator() {
+		this.accumulativeCardSum = 0;
+	}
+	
+	public TotalOrderPriceCalculator(int accumulativeCardSum) {
+		this.accumulativeCardSum = accumulativeCardSum;
+	}
+
+
 	public int calculateTotalOrderPrice(Map<Pizza, Integer> pizzas) {
 		
 		validatePizzas(pizzas);
@@ -28,7 +42,7 @@ public class TotalOrderPriceCalculator {
 			orderPrice += pizza.getPrice() * pizzaCount;
 		}
 		
-		return orderPrice - calculatePizzaDiscount(pizzas);
+		return orderPrice - calculatePizzaDiscount(pizzas) - discountCalculator.calculateDiscount(orderPrice, accumulativeCardSum);
 	}
 	
 
