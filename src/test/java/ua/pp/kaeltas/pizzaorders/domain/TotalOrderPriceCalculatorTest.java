@@ -1,0 +1,83 @@
+package ua.pp.kaeltas.pizzaorders.domain;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Test;
+
+public class TotalOrderPriceCalculatorTest {
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testCalculateTotalOrderPriceWithZeroPizzaThrowException() throws Exception {
+		Map<Pizza, Integer> pizzas = new HashMap<Pizza, Integer>();
+		new TotalOrderPriceCalculator().calculateTotalOrderPrice(pizzas);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testCalculateTotalOrderPriceWithMoreThan10PizzasOfOneTypeThrowException() throws Exception {
+		Map<Pizza, Integer> pizzas = new HashMap<>();
+		pizzas.put(new Pizza(1, "4Cheese", 123, PizzaType.VEGETARIAN), 11);
+		
+		new TotalOrderPriceCalculator().calculateTotalOrderPrice(pizzas);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testCalculateTotalOrderPriceWithMoreThan10PizzasOfDifferentTypesThrowException() throws Exception {
+		Map<Pizza, Integer> pizzas = new HashMap<>();
+		pizzas.put(new Pizza(1, "4Cheese", 123, PizzaType.VEGETARIAN), 4);
+		pizzas.put(new Pizza(2, "5Cheese", 14, PizzaType.VEGETARIAN), 4);
+		pizzas.put(new Pizza(3, "6Cheese", 15, PizzaType.VEGETARIAN), 3);
+		
+		new TotalOrderPriceCalculator().calculateTotalOrderPrice(pizzas);
+	}
+
+	@Test
+	public void testCalculateTotalOrderPriceWithOnePizza() {
+		Map<Pizza, Integer> pizzas = new HashMap<>();
+		int pizzaPrice = 56;
+		pizzas.put(new Pizza(1, "4Cheese", pizzaPrice, PizzaType.VEGETARIAN), 1);
+		int expectedOrderPrice = 56;
+		
+		TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
+		int actualOrderPrice = totalOrderCostCalculator.calculateTotalOrderPrice(pizzas);
+		
+		assertEquals(expectedOrderPrice, actualOrderPrice);
+	}
+	
+	@Test
+	public void testCalculateTotalOrderPriceWithTenPizza() {
+		Map<Pizza, Integer> pizzas = new HashMap<>();
+		int pizzaPrice = 10;
+		pizzas.put(new Pizza(1, "4Cheese", pizzaPrice, PizzaType.VEGETARIAN), 5);
+		pizzas.put(new Pizza(2, "2Cheese", pizzaPrice, PizzaType.VEGETARIAN), 5);
+		int expectedOrderPrice = 100;
+		
+		TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
+		int actualOrderPrice = totalOrderCostCalculator.calculateTotalOrderPrice(pizzas);
+		
+		assertEquals(expectedOrderPrice, actualOrderPrice);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testCalculateTotalOrderPriceWithNegativePizzaPriceThrowException() throws Exception {
+		Map<Pizza, Integer> pizzas = new HashMap<>();
+		int pizzaPrice = -20;
+		pizzas.put(new Pizza(1, "4Cheese", pizzaPrice, PizzaType.VEGETARIAN), 1);
+		
+		new TotalOrderPriceCalculator().calculateTotalOrderPrice(pizzas);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testCalculateTotalOrderPriceWithNegativePizzaCountThrowException() throws Exception {
+		Map<Pizza, Integer> pizzas = new HashMap<>();
+		int pizzaPrice = 20;
+		pizzas.put(new Pizza(1, "4Cheese", pizzaPrice, PizzaType.VEGETARIAN), 5);
+		pizzas.put(new Pizza(2, "2Cheese", pizzaPrice, PizzaType.VEGETARIAN), -2);
+		
+		new TotalOrderPriceCalculator().calculateTotalOrderPrice(pizzas);
+	}
+	
+	
+}
