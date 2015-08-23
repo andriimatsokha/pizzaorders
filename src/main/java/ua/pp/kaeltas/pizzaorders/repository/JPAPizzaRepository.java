@@ -64,4 +64,10 @@ public class JPAPizzaRepository implements PizzaRepository {
 		
 	}
 
+	@Override
+	@Transactional
+	public void update(Pizza pizza) {
+		em.merge(pizza);
+	}
+
 }

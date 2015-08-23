@@ -21,5 +21,9 @@ public class PizzaService {
 	public Pizza getById(Integer id) {
 		return pizzaRepository.getPizzaByID(id);
 	}
+
+	public void save(Pizza pizza) {
+		pizzaRepository.update(pizza);
+	}
 	
 }

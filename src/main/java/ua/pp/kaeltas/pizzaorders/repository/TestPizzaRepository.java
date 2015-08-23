@@ -8,14 +8,14 @@ import ua.pp.kaeltas.pizzaorders.domain.Pizza;
 import ua.pp.kaeltas.pizzaorders.domain.PizzaType;
 import ua.pp.kaeltas.pizzaorders.infrastructure.Benchmark;
 
-public class TestPizzaRepository implements PizzaRepository {
+/*public class TestPizzaRepository implements PizzaRepository {
 
 	private List<Pizza> pizzas;
 	
 	
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see ua.pp.kaeltas.pizzaorders.repository.PizzaRepository#getPizzaByID(java.lang.Integer)
-	 */
+	 
 	@Override
 	@Benchmark
 	public Pizza getPizzaByID(Integer id) {
@@ -71,4 +71,4 @@ public class TestPizzaRepository implements PizzaRepository {
 		
 	}
 	
-}
+}*/

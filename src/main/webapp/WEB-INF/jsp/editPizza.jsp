@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,12 +29,13 @@
 			
 			<h2>Edit pizza</h2>
 			
-			<form class="form-group" action="admin/pizza/edit" method="post">
+			<c:url var="editPizzaUrl" value="/admin/pizza/edit"/>
+			<form class="form-group" action="${editPizzaUrl }" method="post">
 				
 				Name: <input class="form-control" type="text" name="name" value="${pizza.name }"> <br>
 				Price: <input class="form-control" type="text" name="price" value="${pizza.price }"> <br>
 				<input type="hidden" name="id" value="${pizza.id }">
-				
+				<sec:csrfInput/>
 				<button class="btn btn-default" type="submit">Edit</button>
 				
 				<c:url value="/admin/pizza" var="pizzasUrl"/>

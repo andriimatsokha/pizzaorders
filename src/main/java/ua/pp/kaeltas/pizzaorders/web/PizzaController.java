@@ -3,6 +3,7 @@ package ua.pp.kaeltas.pizzaorders.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,7 +12,7 @@ import ua.pp.kaeltas.pizzaorders.domain.Pizza;
 import ua.pp.kaeltas.pizzaorders.service.PizzaService;
 
 @Controller
-public class PizzaController {
+public class PizzaController extends AbstractPizzaController {
 
 	@Autowired
 	PizzaService pizzaService;
@@ -21,6 +22,14 @@ public class PizzaController {
 		
 		Pizza pizza = pizzaService.getById(pizzaId);
 		model.addAttribute("pizza", pizza);
+		
+		return "editPizza";
+	}
+	
+	@RequestMapping(value = "admin/pizza/edit", method = RequestMethod.POST)
+	public String editPizza(@ModelAttribute Pizza pizza, Model model) {
+		
+		pizzaService.save(pizza);
 		
 		return "editPizza";
 	}
