@@ -19,6 +19,8 @@ public class Customer {
 	
 	private String name;
 	
+	private String password;
+	
 	@OneToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name="accumulativecard_id")
 	private AccumulativeCard accumulativeCard;
@@ -72,6 +74,14 @@ public class Customer {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
