@@ -93,65 +93,65 @@ public class TotalOrderPriceCalculatorTest {
 	}
 	
 	@Test
-	public void testCalculatePizzaDiscountWith5Pizzas() {
-		Map<Pizza, Integer> pizzas = new HashMap<>();
-		int pizzaPrice1 = 11;
-		int pizzaPrice2 = 22;
-		int pizzaPrice3 = 33;
-		int pizzaPrice4 = 50;
-		int pizzaPrice5 = 10;
-		pizzas.put(new Pizza(1, "4Cheese", pizzaPrice1, PizzaType.VEGETARIAN), 1);
-		pizzas.put(new Pizza(2, "3Cheese", pizzaPrice2, PizzaType.VEGETARIAN), 1);
-		pizzas.put(new Pizza(3, "2Cheese", pizzaPrice3, PizzaType.VEGETARIAN), 1);
-		pizzas.put(new Pizza(4, "1Cheese", pizzaPrice4, PizzaType.VEGETARIAN), 1);
-		pizzas.put(new Pizza(5, "0Cheese", pizzaPrice5, PizzaType.VEGETARIAN), 1);
-		int expectedPizzaDiscount = 25;
-		
-		TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
-		int actualPizzaDiscount = totalOrderCostCalculator.calculatePizzaDiscount(pizzas);
-		
-		assertEquals(expectedPizzaDiscount, actualPizzaDiscount);
-	}
+		public void testCalculateMaxPizzaPriceDiscountWith5Pizzas() {
+			Map<Pizza, Integer> pizzas = new HashMap<>();
+			int pizzaPrice1 = 11;
+			int pizzaPrice2 = 22;
+			int pizzaPrice3 = 33;
+			int pizzaPrice4 = 50;
+			int pizzaPrice5 = 10;
+			pizzas.put(new Pizza(1, "4Cheese", pizzaPrice1, PizzaType.VEGETARIAN), 1);
+			pizzas.put(new Pizza(2, "3Cheese", pizzaPrice2, PizzaType.VEGETARIAN), 1);
+			pizzas.put(new Pizza(3, "2Cheese", pizzaPrice3, PizzaType.VEGETARIAN), 1);
+			pizzas.put(new Pizza(4, "1Cheese", pizzaPrice4, PizzaType.VEGETARIAN), 1);
+			pizzas.put(new Pizza(5, "0Cheese", pizzaPrice5, PizzaType.VEGETARIAN), 1);
+			int expectedPizzaDiscount = 25;
+			
+			TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
+			int actualPizzaDiscount = totalOrderCostCalculator.calculateMaxPizzaPriceDiscount(pizzas);
+			
+			assertEquals(expectedPizzaDiscount, actualPizzaDiscount);
+		}
 	
 	@Test
-	public void testCalculatePizzaDiscountWithTwoHighestPricePizzas() {
-		Map<Pizza, Integer> pizzas = new HashMap<>();
-		int pizzaPrice1 = 11;
-		int pizzaPrice2 = 22;
-		int pizzaPrice3 = 33;
-		int pizzaPrice4 = 50;
-		int pizzaPrice5 = 50;
-		pizzas.put(new Pizza(1, "4Cheese", pizzaPrice1, PizzaType.VEGETARIAN), 1);
-		pizzas.put(new Pizza(2, "3Cheese", pizzaPrice2, PizzaType.VEGETARIAN), 1);
-		pizzas.put(new Pizza(3, "2Cheese", pizzaPrice3, PizzaType.VEGETARIAN), 1);
-		pizzas.put(new Pizza(4, "1Cheese", pizzaPrice4, PizzaType.VEGETARIAN), 1);
-		pizzas.put(new Pizza(5, "0Cheese", pizzaPrice5, PizzaType.VEGETARIAN), 1);
-		int expectedPizzaDiscount = 25;
-		
-		TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
-		int actualPizzaDiscount = totalOrderCostCalculator.calculatePizzaDiscount(pizzas);
-		
-		assertEquals(expectedPizzaDiscount, actualPizzaDiscount);
-	}
+		public void testCalculateMaxPizzaPriceDiscountWithTwoHighestPricePizzas() {
+			Map<Pizza, Integer> pizzas = new HashMap<>();
+			int pizzaPrice1 = 11;
+			int pizzaPrice2 = 22;
+			int pizzaPrice3 = 33;
+			int pizzaPrice4 = 50;
+			int pizzaPrice5 = 50;
+			pizzas.put(new Pizza(1, "4Cheese", pizzaPrice1, PizzaType.VEGETARIAN), 1);
+			pizzas.put(new Pizza(2, "3Cheese", pizzaPrice2, PizzaType.VEGETARIAN), 1);
+			pizzas.put(new Pizza(3, "2Cheese", pizzaPrice3, PizzaType.VEGETARIAN), 1);
+			pizzas.put(new Pizza(4, "1Cheese", pizzaPrice4, PizzaType.VEGETARIAN), 1);
+			pizzas.put(new Pizza(5, "0Cheese", pizzaPrice5, PizzaType.VEGETARIAN), 1);
+			int expectedPizzaDiscount = 25;
+			
+			TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
+			int actualPizzaDiscount = totalOrderCostCalculator.calculateMaxPizzaPriceDiscount(pizzas);
+			
+			assertEquals(expectedPizzaDiscount, actualPizzaDiscount);
+		}
 	
 	@Test
-	public void testCalculatePizzaDiscountWith4Pizzas() {
-		Map<Pizza, Integer> pizzas = new HashMap<>();
-		int pizzaPrice1 = 11;
-		int pizzaPrice2 = 22;
-		int pizzaPrice3 = 33;
-		int pizzaPrice4 = 43;
-		pizzas.put(new Pizza(1, "4Cheese", pizzaPrice1, PizzaType.VEGETARIAN), 1);
-		pizzas.put(new Pizza(2, "3Cheese", pizzaPrice2, PizzaType.VEGETARIAN), 1);
-		pizzas.put(new Pizza(3, "2Cheese", pizzaPrice3, PizzaType.VEGETARIAN), 1);
-		pizzas.put(new Pizza(4, "1Cheese", pizzaPrice4, PizzaType.VEGETARIAN), 1);
-		int expectedPizzaDiscount = 0;
-		
-		TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
-		int actualPizzaDiscount = totalOrderCostCalculator.calculatePizzaDiscount(pizzas);
-		
-		assertEquals(expectedPizzaDiscount, actualPizzaDiscount);
-	}
+		public void testCalculateMaxPizzaPriceDiscountWith4Pizzas() {
+			Map<Pizza, Integer> pizzas = new HashMap<>();
+			int pizzaPrice1 = 11;
+			int pizzaPrice2 = 22;
+			int pizzaPrice3 = 33;
+			int pizzaPrice4 = 43;
+			pizzas.put(new Pizza(1, "4Cheese", pizzaPrice1, PizzaType.VEGETARIAN), 1);
+			pizzas.put(new Pizza(2, "3Cheese", pizzaPrice2, PizzaType.VEGETARIAN), 1);
+			pizzas.put(new Pizza(3, "2Cheese", pizzaPrice3, PizzaType.VEGETARIAN), 1);
+			pizzas.put(new Pizza(4, "1Cheese", pizzaPrice4, PizzaType.VEGETARIAN), 1);
+			int expectedPizzaDiscount = 0;
+			
+			TotalOrderPriceCalculator totalOrderCostCalculator = new TotalOrderPriceCalculator();
+			int actualPizzaDiscount = totalOrderCostCalculator.calculateMaxPizzaPriceDiscount(pizzas);
+			
+			assertEquals(expectedPizzaDiscount, actualPizzaDiscount);
+		}
 
 	
 }

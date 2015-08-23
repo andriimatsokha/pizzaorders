@@ -31,7 +31,70 @@ public class TotalOrderPriceCalculator {
 	}
 
 
+	/**
+	 * Calculate total order price including all discounts
+	 * 
+	 * @param pizzas
+	 * @return
+	 */
 	public int calculateTotalOrderPrice(Map<Pizza, Integer> pizzas) {
+		
+		int totalOrderPrice = calculateTotalOrderPriceWithoutDiscount(pizzas);
+		
+		int totalOrderPriceWithDiscount = totalOrderPrice - calculateTotalDiscount(pizzas); 
+		
+		if (totalOrderPriceWithDiscount < 0) {
+			throw new RuntimeException("Total order price < 0");
+		}
+		
+		return totalOrderPriceWithDiscount;
+	}
+	
+
+	/**
+	 * If order contains more than 4 pizzas, then give 50% discount to 
+	 * pizza with max price. 
+	 * 
+	 * @param pizzas
+	 * @return
+	 */
+	public int calculateMaxPizzaPriceDiscount(Map<Pizza, Integer> pizzas) {
+		int maxPizzaPrice = 0;
+		if (calcTotalPizzasCount(pizzas) > PIZZA_COUNT_TO_GET_DISCOUNT) {
+			for(Entry<Pizza, Integer> entry : pizzas.entrySet()) {
+				Pizza pizza = entry.getKey();
+				maxPizzaPrice = Math.max(maxPizzaPrice, pizza.getPrice());
+			}
+		}
+		
+		return (int)(maxPizzaPrice*DISCOUNT_PERCENT_FOR_HIGHEST_PRICE_PIZZA);
+	}
+	
+	/**
+	 * Calculate total discount for order: 
+	 * includes discount for pizza with max price(if count of pizzas > 4) and
+	 * discount for sum on accumulative card
+	 * 
+	 * @param pizzas
+	 * @return
+	 */
+	public int calculateTotalDiscount(Map<Pizza, Integer> pizzas) {
+		int totalOrderPrice = calculateTotalOrderPriceWithoutDiscount(pizzas);
+		int maxPizzaPriceDiscount = calculateMaxPizzaPriceDiscount(pizzas);
+		int orderPriceWithMaxPizzaPriceDiscount = totalOrderPrice - maxPizzaPriceDiscount;
+		
+		return maxPizzaPriceDiscount 
+				+ discountCalculator.calculateDiscount(orderPriceWithMaxPizzaPriceDiscount,
+														accumulativeCardSum);
+	}
+	
+	/**
+	 * Calculate total order price without discount
+	 * 
+	 * @param pizzas
+	 * @return
+	 */
+	public int calculateTotalOrderPriceWithoutDiscount(Map<Pizza, Integer> pizzas) {
 		
 		validatePizzas(pizzas);
 		
@@ -42,28 +105,7 @@ public class TotalOrderPriceCalculator {
 			orderPrice += pizza.getPrice() * pizzaCount;
 		}
 		
-		int result = orderPrice;
-		result -= calculatePizzaDiscount(pizzas);
-		result -= discountCalculator.calculateDiscount(orderPrice, accumulativeCardSum);
-		
-		if (result < 0) {
-			throw new RuntimeException("Total order price < 0");
-		}
-		
-		return result;
-	}
-	
-
-	int calculatePizzaDiscount(Map<Pizza, Integer> pizzas) {
-		int maxPizzaPrice = 0;
-		if (calcTotalPizzasCount(pizzas) > PIZZA_COUNT_TO_GET_DISCOUNT) {
-			for(Entry<Pizza, Integer> entry : pizzas.entrySet()) {
-				Pizza pizza = entry.getKey();
-				maxPizzaPrice = Math.max(maxPizzaPrice, pizza.getPrice());
-			}
-		}
-		
-		return (int)(maxPizzaPrice*DISCOUNT_PERCENT_FOR_HIGHEST_PRICE_PIZZA);
+		return orderPrice;
 	}
 	
 	private int calcTotalPizzasCount(Map<Pizza, Integer> pizzas) {

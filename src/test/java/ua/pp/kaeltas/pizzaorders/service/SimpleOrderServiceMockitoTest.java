@@ -42,7 +42,7 @@ public class SimpleOrderServiceMockitoTest {
 		
 		simpleOrderService.placeNewOrder(customer, address, pizzasID);
 		
-		verify(customer, times(1)).getAccumulativeCard();
+		verify(accumulativeCardService, times(1)).getAccumulativeCard(any(Customer.class), any(Address.class));
 		verify(simpleOrderService).getNewOrder();
 		verify(accumulativeCardService).incrementTotalSum(any(AccumulativeCard.class), anyMapOf(Pizza.class, Integer.class));
 		verify(orderRepository).saveOrder(any(Order.class));

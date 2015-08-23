@@ -32,6 +32,7 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
 	private AccumulativeCardService accumulativeCardService;
 	
 	
+	
 	public SimpleOrderService() {
 		
 	}
@@ -65,13 +66,7 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
         newOrder.setPizzas(pizzas);
         newOrder.setAddress(address);
         
-        AccumulativeCard accumulativeCard = null;
-        synchronized(customer) {
-	        accumulativeCard = customer.getAccumulativeCard();
-	        if (accumulativeCard == null) {
-	        	accumulativeCard = accumulativeCardService.createNewAccumulativeCard(customer, address);
-	        }
-        }
+        AccumulativeCard accumulativeCard = accumulativeCardService.getAccumulativeCard(customer, address);
         
         orderRepository.saveOrder(newOrder);  // set Order Id and save Order to in-memory list
         accumulativeCardService.incrementTotalSum(accumulativeCard, pizzas);
@@ -110,6 +105,7 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
 	public List<Order> getAllOrders() {
 		return orderRepository.getAllOrders();
 	}
+
 
 
 
