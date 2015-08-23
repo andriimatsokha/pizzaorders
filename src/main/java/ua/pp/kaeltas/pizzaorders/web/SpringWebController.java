@@ -3,7 +3,6 @@ package ua.pp.kaeltas.pizzaorders.web;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,7 +14,7 @@ import ua.pp.kaeltas.pizzaorders.repository.CustomerRepository;
 import ua.pp.kaeltas.pizzaorders.repository.PizzaRepository;
 import ua.pp.kaeltas.pizzaorders.service.OrderService;
 
-@Controller
+//@Controller
 public class SpringWebController {
 
 	@Autowired
