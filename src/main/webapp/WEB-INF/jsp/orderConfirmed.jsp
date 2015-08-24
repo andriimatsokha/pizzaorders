@@ -21,6 +21,9 @@
 
 	<div class="row">
 		<div class="col-sm-5">
+			<c:url value="/" var="homeUrl"/>
+			<a href="${homeUrl }">Home</a> <br>
+			
 			<c:choose>
 				<c:when test="${cart eq null}">
 					<h4>Your order is empty. Please create new order</h4>

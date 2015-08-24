@@ -21,7 +21,7 @@
 <div class="container">
 
 	<div class="row">
-		<h4>Hello, ${name }!</h4>
+		<h4 style="float:left; margin-right: 15px;">Hello, ${name }!</h4>
 		<c:url var="logoutUrl" value="/logout"/>
 	    <form action="${logoutUrl}" method="post">
 	        <button type="submit" class="btn btn-default">Log out</button>
@@ -31,6 +31,9 @@
 
 	<div class="row">
 		<div class="col-sm-5">
+			<c:url value="/" var="homeUrl"/>
+			<a href="${homeUrl }">Home</a> <br>
+			
 			<h2>Add pizzas to your cart:</h2>
 		
 			<table class="table table-bordered table-condensed table-striped">
@@ -63,6 +66,17 @@
 			
 		</div>
 	</div>
+	
+	<sec:authorize access="hasRole('ADMIN')">
+		<div class="row">
+			<div class="col-sm-2">
+				<br><br>
+				<h4>Admin menu:</h4>
+				<c:url value="/admin/pizza" var="adminUrl"/>
+				<a href="${adminUrl }">Edit pizzas</a>
+			</div>
+		</div>
+	</sec:authorize>
 	
 </div>	
 </body>
