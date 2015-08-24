@@ -35,4 +35,10 @@ public class JPACustomerRepository implements CustomerRepository {
 		return query.getSingleResult();
 	}
 
+	@Override
+	@Transactional
+	public void update(Customer customer) {
+		em.merge(customer);
+	}
+
 }

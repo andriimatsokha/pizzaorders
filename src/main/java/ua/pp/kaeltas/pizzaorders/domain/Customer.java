@@ -62,9 +62,9 @@ public class Customer {
 	}
 
 	public void setAccumulativeCard(AccumulativeCard accumulativeCard) {
-		if (accumulativeCard.getCustomer() != this) {
-			accumulativeCard.setCustomer(this);
-		}
+//		if (accumulativeCard.getCustomer() != this) {
+//			accumulativeCard.setCustomer(this);
+//		}
 		this.accumulativeCard = accumulativeCard;
 	}
 

@@ -15,5 +15,9 @@ public class CustomerService {
 	public Customer getByName(String name) {
 		return customerRepository.findByName(name);
 	}
+
+	public void update(Customer customer) {
+		customerRepository.update(customer);
+	}
 	
 }

@@ -2,6 +2,8 @@ package ua.pp.kaeltas.pizzaorders.service;
 
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ public class AccumulativeCardService {
 	
 	@Autowired
 	private TotalOrderPriceService totalOrderPriceService;
+	
+	@Autowired
+	private CustomerService customerService;
 	
 	/**
 	 * Increment total sum on accumulative card
@@ -80,15 +85,20 @@ public class AccumulativeCardService {
 		return accumulativeCard.getSumOfAllOrders();
 	}
 	
-	
+	@Transactional
 	private AccumulativeCard createNewAccumulativeCard(Customer customer, Address address) {
 
 		AccumulativeCard accumulativeCard;
 		
     	accumulativeCard = new AccumulativeCard();
-    	accumulativeCard.setCustomer(customer);
+    	//accumulativeCard.setCustomer(customer);
     	accumulativeCard.setAddress(address);
+    	
     	accumulativeCardRepository.save(accumulativeCard);
+    	
+    	customer.setAccumulativeCard(accumulativeCard);
+    	customerService.update(customer);
+    	
 		
     	return accumulativeCard;
 	}

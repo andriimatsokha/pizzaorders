@@ -7,5 +7,6 @@ public interface CustomerRepository {
 	Customer find(Integer id);
 	void save(Customer customer);
 	Customer findByName(String name);
+	void update(Customer customer);
 
 }

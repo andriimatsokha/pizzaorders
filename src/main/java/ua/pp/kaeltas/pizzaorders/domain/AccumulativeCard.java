@@ -21,7 +21,7 @@ public class AccumulativeCard {
 	
 	private Integer sumOfAllOrders = 0;
 	
-	@OneToOne(mappedBy="accumulativeCard", cascade = {CascadeType.MERGE})
+	@OneToOne(mappedBy="accumulativeCard")
 	private Customer customer;
 	
 	public Address getAddress() {
@@ -49,9 +49,6 @@ public class AccumulativeCard {
 	}
 
 	public void setCustomer(Customer customer) {
-		if (customer.getAccumulativeCard() != this) {
-			customer.setAccumulativeCard(this);
-		}
 		this.customer = customer;
 	}
 

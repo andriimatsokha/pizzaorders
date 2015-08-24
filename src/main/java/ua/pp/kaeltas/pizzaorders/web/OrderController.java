@@ -47,10 +47,7 @@ public class OrderController {
 	private CustomerService customerService;
 	
 	@Autowired
-	OrderService orderService;
-	
-	@Autowired
-	AddressService addressService;
+	private OrderService orderService;
 	
 	/**
 	 * View all pizzas for customer
@@ -150,9 +147,8 @@ public class OrderController {
 		Map<Pizza, Integer> cart = (Map<Pizza, Integer>)httpSession.getAttribute("cart");
 		
 		Customer customer = (Customer)httpSession.getAttribute("customer");
-		Address ormAddress = addressService.find(address);
 		
-		orderService.placeNewOrder(customer, ormAddress, cart);
+		orderService.placeNewOrder(customer, address, cart);
 		
 //		System.out.println("address = " + address);
 //		System.out.println("address = " + address.equals(customerCurrentAddress));
