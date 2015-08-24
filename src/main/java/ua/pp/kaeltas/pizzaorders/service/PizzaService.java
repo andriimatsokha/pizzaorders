@@ -2,33 +2,16 @@ package ua.pp.kaeltas.pizzaorders.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import ua.pp.kaeltas.pizzaorders.domain.Pizza;
-import ua.pp.kaeltas.pizzaorders.repository.PizzaRepository;
 
-@Service
-public class PizzaService {
+public interface PizzaService {
 
-	@Autowired
-	PizzaRepository pizzaRepository;
-	
-	public List<Pizza> getAllPizzas() {
-		return pizzaRepository.getAllPizzas();
-	}
-	
-	public Pizza getById(Integer id) {
-		return pizzaRepository.getPizzaByID(id);
-	}
+	public abstract List<Pizza> getAllPizzas();
 
-	public void save(Pizza pizza) {
-		pizzaRepository.update(pizza);
-	}
+	public abstract Pizza getById(Integer id);
 
-	public void delete(Integer pizzaId) {
-		pizzaRepository.delete(pizzaId);
-		
-	}
-	
+	public abstract void save(Pizza pizza);
+
+	public abstract void delete(Integer pizzaId);
+
 }

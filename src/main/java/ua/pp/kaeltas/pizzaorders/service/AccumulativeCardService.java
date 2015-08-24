@@ -2,43 +2,21 @@ package ua.pp.kaeltas.pizzaorders.service;
 
 import java.util.Map;
 
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import ua.pp.kaeltas.pizzaorders.domain.AccumulativeCard;
 import ua.pp.kaeltas.pizzaorders.domain.Address;
 import ua.pp.kaeltas.pizzaorders.domain.Customer;
 import ua.pp.kaeltas.pizzaorders.domain.Pizza;
-import ua.pp.kaeltas.pizzaorders.repository.AccumulativeCardRepository;
 
-@Service
-public class AccumulativeCardService {
-	
-	@Autowired
-	private AccumulativeCardRepository accumulativeCardRepository;
-	
-	@Autowired
-	private TotalOrderPriceService totalOrderPriceService;
-	
-	@Autowired
-	private CustomerService customerService;
-	
+public interface AccumulativeCardService {
+
 	/**
 	 * Increment total sum on accumulative card
 	 * 
 	 * @param accumulativeCard
 	 * @param pizzas
 	 */
-	public void incrementTotalSum(AccumulativeCard accumulativeCard, Map<Pizza, Integer> pizzas) {
-
-		int totalPrice = totalOrderPriceService.calculateTotalOrderPrice(pizzas, accumulativeCard.getSumOfAllOrders());
-		
-		accumulativeCard.incrementSumOfAllOrders(totalPrice);
-		
-		accumulativeCardRepository.update(accumulativeCard);
-	}
+	public abstract void incrementTotalSum(AccumulativeCard accumulativeCard,
+			Map<Pizza, Integer> pizzas);
 
 	/**
 	 * Get accumulative card for given customer and update current address.
@@ -48,59 +26,15 @@ public class AccumulativeCardService {
 	 * @param address
 	 * @return
 	 */
-	public AccumulativeCard getAccumulativeCard(Customer customer,
-			Address address) {
-		AccumulativeCard accumulativeCard = null;
-		synchronized(customer) {
-	        accumulativeCard = customer.getAccumulativeCard();
-	        if (accumulativeCard == null) {
-	        	accumulativeCard = createNewAccumulativeCard(customer, address);
-	        } else if (accumulativeCard.getAddress() != null && !accumulativeCard.getAddress().equals(address)){
-	        	accumulativeCard.setAddress(address);
-	        }
-        }
-		
-		return accumulativeCard;
-	}
-	
+	public abstract AccumulativeCard getAccumulativeCard(Customer customer,
+			Address address);
+
 	/**
 	 * Return total sum of all orders for given customer
 	 * 
 	 * @param customer
 	 * @return
 	 */
-	public int getAccumulativeCardSum(Customer customer) {
-		if (customer == null) {
-			throw new IllegalArgumentException("Customer must be not null");
-		}
-		
-		AccumulativeCard accumulativeCard = null;
-		synchronized(customer) {
-	        accumulativeCard = customer.getAccumulativeCard();
-	        if (accumulativeCard == null) {
-	        	return 0;
-	        }
-        }
-		
-		return accumulativeCard.getSumOfAllOrders();
-	}
-	
-	@Transactional
-	private AccumulativeCard createNewAccumulativeCard(Customer customer, Address address) {
+	public abstract int getAccumulativeCardSum(Customer customer);
 
-		AccumulativeCard accumulativeCard;
-		
-    	accumulativeCard = new AccumulativeCard();
-    	//accumulativeCard.setCustomer(customer);
-    	accumulativeCard.setAddress(address);
-    	
-    	accumulativeCardRepository.save(accumulativeCard);
-    	
-    	customer.setAccumulativeCard(accumulativeCard);
-    	customerService.update(customer);
-    	
-		
-    	return accumulativeCard;
-	}
-	
 }

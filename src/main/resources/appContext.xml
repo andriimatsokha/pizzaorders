@@ -17,7 +17,7 @@
     <bean name="discountCalculator" class="ua.pp.kaeltas.pizzaorders.domain.PercentOfTotalOrderDiscountCalculator"/>
         
     <bean name="orderService" 
-    	class="ua.pp.kaeltas.pizzaorders.service.SimpleOrderService">
+    	class="ua.pp.kaeltas.pizzaorders.service.OrderServiceImpl">
     	<!-- autowire="constructor" -->
     	<!-- <constructor-arg  ref="pizzaRepository"/>
     	<constructor-arg ref="orderRepository"/> -->

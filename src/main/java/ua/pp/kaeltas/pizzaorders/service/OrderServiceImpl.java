@@ -17,7 +17,7 @@ import ua.pp.kaeltas.pizzaorders.infrastructure.Benchmark;
 import ua.pp.kaeltas.pizzaorders.repository.OrderRepository;
 import ua.pp.kaeltas.pizzaorders.repository.PizzaRepository;
 
-public class SimpleOrderService implements OrderService/*, ApplicationContextAware*/ {
+public class OrderServiceImpl implements OrderService/*, ApplicationContextAware*/ {
 	
 	//private ObjectFactory objectFactory = ObjectFactory.getInstance();
 	//private ApplicationContext appContext;
@@ -35,7 +35,7 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
 	private AddressService addressService;
 	
 	
-	public SimpleOrderService() {
+	public OrderServiceImpl() {
 		
 	}
 //	public SimpleOrderService(

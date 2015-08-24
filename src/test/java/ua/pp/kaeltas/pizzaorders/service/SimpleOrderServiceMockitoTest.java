@@ -28,7 +28,7 @@ public class SimpleOrderServiceMockitoTest {
 	private PizzaRepository pizzaRepository;
 	
 	@InjectMocks
-	private SimpleOrderService simpleOrderService = spy(SimpleOrderService.class);
+	private OrderServiceImpl simpleOrderService = spy(OrderServiceImpl.class);
 	
 	@Test
 	public void testPlaceNewOrder() throws Exception {
