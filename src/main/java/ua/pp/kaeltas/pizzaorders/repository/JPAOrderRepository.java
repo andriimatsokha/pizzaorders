@@ -9,11 +9,14 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import ua.pp.kaeltas.pizzaorders.domain.Customer;
 import ua.pp.kaeltas.pizzaorders.domain.Order;
 
 @Repository
 public class JPAOrderRepository implements OrderRepository {
 	
+	private static final String SELECT_FROM_ORDER_BY_CUSTOMER = "SELECT o FROM Order o WHERE o.customer.id = :customerId";
+	private static final String SELECT_ALL_FROM_ORDER = "SELECT o FROM Order o";
 	@PersistenceContext(unitName="HibernatePostgreSQL")
 	EntityManager em;
 
@@ -26,7 +29,16 @@ public class JPAOrderRepository implements OrderRepository {
 	@Override
 	public List<Order> getAllOrders() {
 		
-		TypedQuery<Order> query = em.createQuery("SELECT o FROM Order o", Order.class);
+		TypedQuery<Order> query = em.createQuery(SELECT_ALL_FROM_ORDER, Order.class);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Order> findByCustomer(Customer customer) {
+		
+		TypedQuery<Order> query = em.createQuery(SELECT_FROM_ORDER_BY_CUSTOMER, Order.class);
+		query.setParameter("customerId", customer.getId());
+		
 		return query.getResultList();
 	}
 	

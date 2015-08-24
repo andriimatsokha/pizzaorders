@@ -1,6 +1,6 @@
 package ua.pp.kaeltas.pizzaorders.domain;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.Map;
 
 import javax.persistence.CollectionTable;
@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -32,6 +34,9 @@ public class Order {
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
+	
+	@Temporal(TemporalType.DATE)
+	private Date createDate = new Date();
 	
 	//private List<Pizza> pizzas;
 	@ElementCollection(fetch=FetchType.EAGER)
@@ -96,5 +101,15 @@ public class Order {
 	public void destroy() {
 		System.out.println("---destroy ");
 	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	
+	
 	
 }

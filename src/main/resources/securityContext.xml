@@ -32,7 +32,7 @@
 		<intercept-url pattern="/*" access="permitAll"/>
 		<intercept-url pattern="/order/**" access="hasAnyRole('USER', 'ADMIN')"/>
 		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
-		<form-login/>
+		<form-login default-target-url="/order/pizza/select" always-use-default-target="true"/>
 		<logout logout-success-url="/"/>
 	</http>
 	

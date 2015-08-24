@@ -1,6 +1,6 @@
 package ua.pp.kaeltas.pizzaorders.web;
 
-import java.beans.PropertyEditorSupport;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,18 +12,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.pp.kaeltas.pizzaorders.domain.Address;
 import ua.pp.kaeltas.pizzaorders.domain.Customer;
+import ua.pp.kaeltas.pizzaorders.domain.Order;
 import ua.pp.kaeltas.pizzaorders.domain.Pizza;
-import ua.pp.kaeltas.pizzaorders.exception.NotFoundPizzaException;
 import ua.pp.kaeltas.pizzaorders.service.AccumulativeCardService;
-import ua.pp.kaeltas.pizzaorders.service.AddressService;
 import ua.pp.kaeltas.pizzaorders.service.CustomerService;
 import ua.pp.kaeltas.pizzaorders.service.OrderService;
 import ua.pp.kaeltas.pizzaorders.service.PizzaService;
@@ -162,6 +159,25 @@ public class OrderController {
 		httpSession.setAttribute("orderDiscount", null);
 		
 		return "orderConfirmed";
+	}
+	
+	/**
+	 * View all orders of current customer
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("history")
+	public String showOrders(HttpServletRequest httpServletRequest, Model model) {
+		
+		HttpSession session = httpServletRequest.getSession();
+		Customer customer = (Customer) session.getAttribute("customer");
+		
+		List<Order> customerOrders = orderService.getAllOrders(customer);
+		
+		model.addAttribute("orders", customerOrders);
+		
+		return "ordersHistory";
 	}
 	
 }

@@ -119,6 +119,16 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
 	}
 
 
+
+	@Override
+	public List<Order> getAllOrders(Customer customer) {
+		List<Order> orders = orderRepository.findByCustomer(customer);
+		
+		
+		return orders;
+	}
+
+
 //	@Override
 //	public void setApplicationContext(ApplicationContext ac)
 //			throws BeansException {

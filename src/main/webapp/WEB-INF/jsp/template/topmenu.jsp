@@ -15,5 +15,18 @@
 	<div class="col-sm-5">
 		<c:url value="/" var="homeUrl"/>
 		<a href="${homeUrl }" style="margin-right: 15px;">Home</a>
+		
+		<c:url value="/order/history" var="viewOrdersUrl"/>
+		<a href="${viewOrdersUrl }" style="margin-right: 15px;">Orders history</a>
+		
+		<sec:authorize access="hasRole('ADMIN')">
+			<span style="margin-right: 15px;">|</span>
+
+			<c:url value="/admin/pizza" var="editPizzasUrl"/>
+			<a href="${editPizzasUrl }" style="margin-right: 15px;">Edit pizzas</a>
+			
+			<c:url value="/admin/order/history" var="viewAllOrdersUrl"/>
+			<a href="${viewAllOrdersUrl }" style="margin-right: 15px;">View all orders</a>
+		</sec:authorize>
 	</div>
 </div>
