@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  <!-- Секция аппендеров -->
+  <Appenders>
+    <!-- Файловый аппендер -->
+    <File name="file" fileName="${sys:catalina.home}/logs/test.log">
+      <PatternLayout>
+        <Pattern>%d %p %c [%t] %m %ex%n</Pattern>
+      </PatternLayout>
+    </File>
+  </Appenders>
+  <!-- Секция логгеров -->
+  <Loggers>
+    <!-- Корневой логгер -->
+    <Root level="trace">
+      <AppenderRef ref="file" level="DEBUG"/>
+    </Root>
+  </Loggers>
+</Configuration> 

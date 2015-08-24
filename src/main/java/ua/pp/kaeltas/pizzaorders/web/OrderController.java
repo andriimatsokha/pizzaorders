@@ -7,6 +7,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +33,8 @@ import ua.pp.kaeltas.pizzaorders.service.TotalOrderPriceService;
 @RequestMapping("order")
 public class OrderController {
 
+	private final Logger logger = LogManager.getLogger(OrderController.class);
+	
 	@Autowired
 	private PizzaService pizzaService;
 	
@@ -139,6 +143,7 @@ public class OrderController {
 	@RequestMapping("checkout")
 	public String checkout(@ModelAttribute Address address, HttpServletRequest httpServletRequest, Model model) {
 		
+		
 		HttpSession httpSession = httpServletRequest.getSession();
 		@SuppressWarnings("unchecked")
 		Map<Pizza, Integer> cart = (Map<Pizza, Integer>)httpSession.getAttribute("cart");
@@ -147,16 +152,22 @@ public class OrderController {
 		
 		orderService.placeNewOrder(customer, address, cart);
 		
-//		System.out.println("address = " + address);
-//		System.out.println("address = " + address.equals(customerCurrentAddress));
-		
-		model.addAttribute("totalOrderPriceWoDiscount", httpSession.getAttribute("totalOrderPriceWoDiscount"));
-		model.addAttribute("orderDiscount", httpSession.getAttribute("orderDiscount"));
+		Integer totalOrderPriceWoDiscount = (Integer) httpSession.getAttribute("totalOrderPriceWoDiscount");
+		model.addAttribute("totalOrderPriceWoDiscount", totalOrderPriceWoDiscount);
+		Integer orderDiscount = (Integer) httpSession.getAttribute("orderDiscount");
+		model.addAttribute("orderDiscount", orderDiscount);
 		model.addAttribute("cart", cart);
+		
+		logger.info("checkout order: customerId = " + customer.getId()
+				+ ", totalOrderPriceWoDiscount = " + totalOrderPriceWoDiscount
+				+ ", orderDiscount = " + orderDiscount
+				+ ", totalPrice = " + (totalOrderPriceWoDiscount - orderDiscount));
 		
 		httpSession.setAttribute("cart", null);
 		httpSession.setAttribute("totalOrderPriceWoDiscount", null);
 		httpSession.setAttribute("orderDiscount", null);
+		
+		
 		
 		return "orderConfirmed";
 	}

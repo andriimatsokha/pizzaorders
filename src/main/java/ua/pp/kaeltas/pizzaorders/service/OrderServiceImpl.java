@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ua.pp.kaeltas.pizzaorders.domain.AccumulativeCard;
@@ -16,11 +18,14 @@ import ua.pp.kaeltas.pizzaorders.domain.Pizza;
 import ua.pp.kaeltas.pizzaorders.infrastructure.Benchmark;
 import ua.pp.kaeltas.pizzaorders.repository.OrderRepository;
 import ua.pp.kaeltas.pizzaorders.repository.PizzaRepository;
+import ua.pp.kaeltas.pizzaorders.web.IndexController;
 
 public class OrderServiceImpl implements OrderService/*, ApplicationContextAware*/ {
 	
 	//private ObjectFactory objectFactory = ObjectFactory.getInstance();
 	//private ApplicationContext appContext;
+	
+	private final Logger logger = LogManager.getLogger(OrderServiceImpl.class);
 	
 	@Autowired
 	private PizzaRepository pizzaRepository;
@@ -72,6 +77,10 @@ public class OrderServiceImpl implements OrderService/*, ApplicationContextAware
 			Map<Pizza, Integer> pizzas) {
 		
 		Address ormAddress = addressService.find(address);
+
+		logger.info("place new order: customerId = " + customer.getId() 
+				+ ", address = " + ormAddress 
+				+ ", pizzas = " + pizzas);
 		
 		Order newOrder = getNewOrder();
         newOrder.setCustomer(customer);

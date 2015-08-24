@@ -4,6 +4,8 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import ua.pp.kaeltas.pizzaorders.repository.AccumulativeCardRepository;
 
 @Service
 public class AccumulativeCardServiceImpl implements AccumulativeCardService {
+	
+	private final Logger logger = LogManager.getLogger(AccumulativeCardServiceImpl.class);
 	
 	@Autowired
 	private AccumulativeCardRepository accumulativeCardRepository;
@@ -51,6 +55,9 @@ public class AccumulativeCardServiceImpl implements AccumulativeCardService {
 	        	accumulativeCard = createNewAccumulativeCard(customer, address);
 	        } else if (accumulativeCard.getAddress() != null && !accumulativeCard.getAddress().equals(address)){
 	        	accumulativeCard.setAddress(address);
+	        	logger.info("set new address for accumulative card:"
+	        			+ " accumulativeCardId = " + accumulativeCard.getId()
+	        			+ ", address = " + address);
 	        }
         }
 		
@@ -90,7 +97,8 @@ public class AccumulativeCardServiceImpl implements AccumulativeCardService {
     	
     	customer.setAccumulativeCard(accumulativeCard);
     	customerService.update(customer);
-    	
+
+    	logger.info("create new accumulative card for customerId = " + customer.getId());
 		
     	return accumulativeCard;
 	}
