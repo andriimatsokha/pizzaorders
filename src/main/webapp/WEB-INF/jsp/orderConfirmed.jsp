@@ -22,7 +22,7 @@
 	<div class="row">
 		<div class="col-sm-5">
 			<c:choose>
-				<c:when test="${sessionScope.cart eq null}">
+				<c:when test="${cart eq null}">
 					<h4>Your order is empty. Please create new order</h4>
 				</c:when>
 				<c:otherwise>

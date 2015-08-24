@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -33,7 +34,9 @@
 					<tr>
 						<th class="col-sm-5">Name</th>
 						<th class="col-sm-4">Price</th>
+						<th class="col-sm-4">Type</th>
 						<th class="col-sm-3">Edit</th>
+						<th class="col-sm-3">Delete</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -41,6 +44,7 @@
 						<tr>
 							<td><c:out value="${pizza.name }"/> </td>
 							<td><c:out value="${pizza.price }"/> </td>
+							<td><c:out value="${pizza.type }"/> </td>
 							<td>
 								<c:url var="editPizzaUrl" value="/admin/pizza/edit"/>
 								<form class="form-group" action="${editPizzaUrl }" style="margin-bottom:0px">
@@ -48,10 +52,21 @@
 									<button type="submit" class="btn btn-default">Edit</button>
 								</form>
 							</td>
+							<td>
+								<c:url var="delPizzaUrl" value="/admin/pizza/delete"/>
+								<form class="form-group" action="${delPizzaUrl }" style="margin-bottom:0px" method="post">
+									<input type="hidden" name="pizzaId" value="${pizza.id }"/>
+									<sec:csrfInput />
+									<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+								</form>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			<c:url var="addPizzaUrl" value="/admin/pizza/add"/>
+			<a href="${addPizzaUrl }" class="btn btn-default">Add new pizza</a>
 			
 		</div>
 	

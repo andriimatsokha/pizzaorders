@@ -27,25 +27,21 @@
 			<a href="${homeUrl }">Home</a> <br>
 
 			
-			<h2>Edit pizza</h2>
+			<h2>Add new pizza</h2>
 			
-			<c:url var="editPizzaUrl" value="/admin/pizza/edit"/>
-			<form class="form-group" action="${editPizzaUrl }" method="post">
+			<c:url var="addPizzaUrl" value="/admin/pizza/add"/>
+			<form class="form-group" action="${addPizzaUrl }" method="post">
 				
-				Name: <input class="form-control" type="text" name="name" value="${pizza.name }"> <br>
-				Price: <input class="form-control" type="text" name="price" value="${pizza.price }"> <br>
+				Name: <input class="form-control" type="text" name="name"> <br>
+				Price: <input class="form-control" type="text" name="price"> <br>
 				Type: <select class="form-control" name="type">
 					<c:forEach var="pizzaType" items="${pizzaTypes }">
-						<c:set var="selected" value=""/>
-						<c:if test="${pizzaType eq pizza.type }">
-							<c:set var="selected" value="selected"/>
-						</c:if>
-						<option ${selected } value="${pizzaType}">${pizzaType }
+						<option value="${pizzaType}">${pizzaType }
 					</c:forEach>
 				</select> <br>
-				<input type="hidden" name="id" value="${pizza.id }">
+				
 				<sec:csrfInput/>
-				<button class="btn btn-default" type="submit">Edit</button>
+				<button class="btn btn-default" type="submit">Add</button>
 				
 				<c:url value="/admin/pizza" var="pizzasUrl"/>
 				<a href="${pizzasUrl }" class="btn btn-default">Back</a>

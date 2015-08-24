@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.pp.kaeltas.pizzaorders.domain.Customer;
 import ua.pp.kaeltas.pizzaorders.domain.Pizza;
-import ua.pp.kaeltas.pizzaorders.repository.CustomerRepository;
 import ua.pp.kaeltas.pizzaorders.service.AccumulativeCardService;
+import ua.pp.kaeltas.pizzaorders.service.CustomerService;
 import ua.pp.kaeltas.pizzaorders.service.PizzaService;
 import ua.pp.kaeltas.pizzaorders.service.TotalOrderPriceService;
 
@@ -36,8 +36,14 @@ public class OrderController {
 	private AccumulativeCardService accumulativeCardService;
 
 	@Autowired
-	private CustomerRepository customerRepository;
+	private CustomerService customerService;
 	
+	/**
+	 * View all pizzas for customer
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("pizza/select")
 	public String showPizzas(Model model) {
 		
@@ -61,13 +67,11 @@ public class OrderController {
 	 */
 	@RequestMapping("pizza/addtocart")
 	public String addToCart(@RequestParam Integer pizzaId, 
-			HttpServletRequest httpServletRequest, Model model) {
+			HttpServletRequest httpServletRequest, 
+			Model model) {
 		HttpSession httpSession = httpServletRequest.getSession();
 		
-		//TODO test customer
-		Customer customer1 = customerRepository.find(20); 
-		httpSession.setAttribute("customer", customer1);
-		
+		@SuppressWarnings("unchecked")
 		Map<Pizza, Integer> cart = (Map<Pizza, Integer>) httpSession.getAttribute("cart");
 		if (cart == null) {
 			cart = new ConcurrentHashMap<Pizza, Integer>();
@@ -76,7 +80,8 @@ public class OrderController {
 	
 		incrementPizzaCountInCart(pizzaId, cart);
 		
-		Customer customer = (Customer)httpSession.getAttribute("customer");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = customerService.getByName(auth.getName());
 		
 		int accumulativeCardSum = accumulativeCardService.getAccumulativeCardSum(customer);
 		
@@ -98,16 +103,29 @@ public class OrderController {
 		}
 	}
 	
+	/**
+	 * View customer's current cart
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("showcart")
 	public String showCart(Model model) {
 		
 		return "showCart";
 	}
 	
+	/**
+	 * Checkout customer's current order
+	 * 
+	 * @param httpServletRequest
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("checkout")
 	public String checkout(HttpServletRequest httpServletRequest, Model model) {
 		
 		HttpSession httpSession = httpServletRequest.getSession();
+		@SuppressWarnings("unchecked")
 		Map<Pizza, Integer> cart = (Map<Pizza, Integer>)httpSession.getAttribute("cart");
 		
 		

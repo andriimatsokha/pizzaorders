@@ -11,5 +11,6 @@ public interface PizzaRepository {
 	public abstract void update(Pizza pizza);
 	public List<Pizza> getAllPizzas();
 	public abstract void createDefaultPizzas();
+	public abstract void delete(Integer pizzaId);
 
 }

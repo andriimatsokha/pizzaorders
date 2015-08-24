@@ -49,6 +49,7 @@
 							<td>
 								<form class="form-group" style="margin-bottom:0px" action="addtocart" method="post">
 									<input type="hidden" name="pizzaId" value="${pizza.id }"/>
+									<sec:csrfInput/>
 									<button type="submit" class="btn btn-default">Add</button>
 								</form>
 							</td>

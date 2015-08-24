@@ -25,5 +25,10 @@ public class PizzaService {
 	public void save(Pizza pizza) {
 		pizzaRepository.update(pizza);
 	}
+
+	public void delete(Integer pizzaId) {
+		pizzaRepository.delete(pizzaId);
+		
+	}
 	
 }

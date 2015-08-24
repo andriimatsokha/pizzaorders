@@ -32,7 +32,7 @@ public class JPAPizzaRepository implements PizzaRepository {
 	@Override
 	public List<Pizza> getAllPizzas() {
 		
-		TypedQuery<Pizza> typedQuery = em.createQuery("select p from Pizza p", Pizza.class);
+		TypedQuery<Pizza> typedQuery = em.createQuery("select p from Pizza p order by p.name", Pizza.class);
 		return typedQuery.getResultList();
 		
 	}
@@ -68,6 +68,12 @@ public class JPAPizzaRepository implements PizzaRepository {
 	@Transactional
 	public void update(Pizza pizza) {
 		em.merge(pizza);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Integer pizzaId) {
+		em.remove(getPizzaByID(pizzaId));
 	}
 
 }
