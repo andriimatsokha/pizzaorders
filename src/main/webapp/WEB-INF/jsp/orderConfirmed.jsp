@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,12 +19,10 @@
 <body>
 
 <div class="container">
+	<c:import url="template/topmenu.jsp"/>
 
 	<div class="row">
 		<div class="col-sm-5">
-			<c:url value="/" var="homeUrl"/>
-			<a href="${homeUrl }">Home</a> <br>
-			
 			<c:choose>
 				<c:when test="${cart eq null}">
 					<h4>Your order is empty. Please create new order</h4>

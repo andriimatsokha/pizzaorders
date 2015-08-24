@@ -20,18 +20,12 @@ public class AccumulativeCardService {
 	@Autowired
 	private TotalOrderPriceService totalOrderPriceService;
 	
-	public AccumulativeCard createNewAccumulativeCard(Customer customer, Address address) {
-
-		AccumulativeCard accumulativeCard;
-		
-    	accumulativeCard = new AccumulativeCard();
-    	accumulativeCard.setCustomer(customer);
-    	accumulativeCard.setAddress(address);
-    	accumulativeCardRepository.save(accumulativeCard);
-		
-    	return accumulativeCard;
-	}
-	
+	/**
+	 * Increment total sum on accumulative card
+	 * 
+	 * @param accumulativeCard
+	 * @param pizzas
+	 */
 	public void incrementTotalSum(AccumulativeCard accumulativeCard, Map<Pizza, Integer> pizzas) {
 
 		int totalPrice = totalOrderPriceService.calculateTotalOrderPrice(pizzas, accumulativeCard.getSumOfAllOrders());
@@ -41,6 +35,14 @@ public class AccumulativeCardService {
 		accumulativeCardRepository.update(accumulativeCard);
 	}
 
+	/**
+	 * Get accumulative card for given customer.
+	 * If accumulative card does not exist - create it.
+	 * 
+	 * @param customer
+	 * @param address
+	 * @return
+	 */
 	public AccumulativeCard getAccumulativeCard(Customer customer,
 			Address address) {
 		AccumulativeCard accumulativeCard = null;
@@ -54,6 +56,12 @@ public class AccumulativeCardService {
 		return accumulativeCard;
 	}
 	
+	/**
+	 * Return total sum of all orders for given customer
+	 * 
+	 * @param customer
+	 * @return
+	 */
 	public int getAccumulativeCardSum(Customer customer) {
 		if (customer == null) {
 			throw new IllegalArgumentException("Customer must be not null");
@@ -70,5 +78,17 @@ public class AccumulativeCardService {
 		return accumulativeCard.getSumOfAllOrders();
 	}
 	
+	
+	private AccumulativeCard createNewAccumulativeCard(Customer customer, Address address) {
+
+		AccumulativeCard accumulativeCard;
+		
+    	accumulativeCard = new AccumulativeCard();
+    	accumulativeCard.setCustomer(customer);
+    	accumulativeCard.setAddress(address);
+    	accumulativeCardRepository.save(accumulativeCard);
+		
+    	return accumulativeCard;
+	}
 	
 }

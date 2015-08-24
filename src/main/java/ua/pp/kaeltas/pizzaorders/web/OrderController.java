@@ -45,13 +45,21 @@ public class OrderController {
 	 * @return
 	 */
 	@RequestMapping("pizza/select")
-	public String showPizzas(Model model) {
+	public String showPizzas(HttpServletRequest httpServletRequest, Model model) {
+		
+		HttpSession session = httpServletRequest.getSession();
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("name", auth.getName());
+        //model.addAttribute("name", auth.getName());
         //model.addAttribute("roles", auth.getAuthorities().toString());
-		
+        
+        Customer customer = customerService.getByName(auth.getName()); 
+        session.setAttribute("customer", customer);
+        int accCardSum = accumulativeCardService.getAccumulativeCardSum(customer);
+        
+        
 		model.addAttribute("pizzas", pizzaService.getAllPizzas());
+		model.addAttribute("accCardSum", accCardSum);
 		
 		return "selectPizza";
 	}
@@ -80,8 +88,7 @@ public class OrderController {
 	
 		incrementPizzaCountInCart(pizzaId, cart);
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Customer customer = customerService.getByName(auth.getName());
+		Customer customer = (Customer)httpSession.getAttribute("customer");
 		
 		int accumulativeCardSum = accumulativeCardService.getAccumulativeCardSum(customer);
 		
@@ -133,7 +140,9 @@ public class OrderController {
 		model.addAttribute("orderDiscount", httpSession.getAttribute("orderDiscount"));
 		model.addAttribute("cart", cart);
 		
-		httpSession.invalidate();
+		httpSession.setAttribute("cart", null);
+		httpSession.setAttribute("totalOrderPriceWoDiscount", null);
+		httpSession.setAttribute("orderDiscount", null);
 		
 		return "orderConfirmed";
 	}

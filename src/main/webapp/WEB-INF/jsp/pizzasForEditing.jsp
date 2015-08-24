@@ -19,12 +19,10 @@
 <body>
 
 <div class="container">
+	<c:import url="template/topmenu.jsp"/>
+	
 	<div class="row">
-		
 		<div class="col-sm-5">
-			
-			<c:url value="/" var="homeUrl"/>
-			<a href="${homeUrl }">Home</a> <br>
 			
 			<h4>Edit pizzas</h4>
 			
