@@ -12,6 +12,7 @@ import ua.pp.kaeltas.pizzaorders.domain.Customer;
 @Repository
 public class JPACustomerRepository implements CustomerRepository {
 
+	private static final String SELECT_FROM_CUSTOMER_BY_NAME = "SELECT c FROM Customer c WHERE c.name=:name";
 	@PersistenceContext(unitName="HibernatePostgreSQL")
 	EntityManager em;
 	
@@ -29,7 +30,7 @@ public class JPACustomerRepository implements CustomerRepository {
 	@Override
 	public Customer findByName(String name) {
 		
-		TypedQuery<Customer> query = em.createQuery("SELECT c FROM Customer c WHERE c.name=:name", Customer.class);
+		TypedQuery<Customer> query = em.createQuery(SELECT_FROM_CUSTOMER_BY_NAME, Customer.class);
 		query.setParameter("name", name);
 		
 		return query.getSingleResult();

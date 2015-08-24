@@ -15,6 +15,7 @@ import ua.pp.kaeltas.pizzaorders.domain.PizzaType;
 @Repository
 public class JPAPizzaRepository implements PizzaRepository {
 
+	private static final String SELECT_All_FROM_PIZZA_ORDER_BY_NAME = "select p from Pizza p order by p.name";
 	@PersistenceContext(unitName="HibernatePostgreSQL")
 	EntityManager em;
 	
@@ -32,7 +33,7 @@ public class JPAPizzaRepository implements PizzaRepository {
 	@Override
 	public List<Pizza> getAllPizzas() {
 		
-		TypedQuery<Pizza> typedQuery = em.createQuery("select p from Pizza p order by p.name", Pizza.class);
+		TypedQuery<Pizza> typedQuery = em.createQuery(SELECT_All_FROM_PIZZA_ORDER_BY_NAME, Pizza.class);
 		return typedQuery.getResultList();
 		
 	}
