@@ -61,7 +61,15 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
 	public Order placeNewOrder(Customer customer, Address address, Integer ... pizzasID) {
         Map<Pizza, Integer> pizzas = createPizzasMapFromIds(pizzasID);
         
-        Order newOrder = getNewOrder();
+        return placeNewOrder(customer, address, pizzas);
+    }
+	
+	@Override
+	@Transactional
+	public Order placeNewOrder(Customer customer, Address address,
+			Map<Pizza, Integer> pizzas) {
+		
+		Order newOrder = getNewOrder();
         newOrder.setCustomer(customer);
         newOrder.setPizzas(pizzas);
         newOrder.setAddress(address);
@@ -72,7 +80,7 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
         accumulativeCardService.incrementTotalSum(accumulativeCard, pizzas);
         
         return newOrder;
-    }
+	}
 
 
 
@@ -105,8 +113,6 @@ public class SimpleOrderService implements OrderService/*, ApplicationContextAwa
 	public List<Order> getAllOrders() {
 		return orderRepository.getAllOrders();
 	}
-
-
 
 
 //	@Override

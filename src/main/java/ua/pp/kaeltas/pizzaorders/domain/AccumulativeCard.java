@@ -15,7 +15,7 @@ public class AccumulativeCard {
 	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Integer id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="address_id")
 	private Address address;
 	

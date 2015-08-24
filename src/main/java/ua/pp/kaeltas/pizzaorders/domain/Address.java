@@ -38,5 +38,44 @@ public class Address {
 		return id;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((houseNumber == null) ? 0 : houseNumber.hashCode());
+		result = prime * result + ((street == null) ? 0 : street.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Address))
+			return false;
+		Address other = (Address) obj;
+		if (houseNumber == null) {
+			if (other.houseNumber != null)
+				return false;
+		} else if (!houseNumber.equals(other.houseNumber))
+			return false;
+		if (street == null) {
+			if (other.street != null)
+				return false;
+		} else if (!street.equals(other.street))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", street=" + street + ", houseNumber="
+				+ houseNumber + "]";
+	}
+
+	
 	
 }

@@ -11,6 +11,7 @@ import ua.pp.kaeltas.pizzaorders.domain.Pizza;
 public interface OrderService {
 
 	public abstract Order placeNewOrder(Customer customer, Address address, Integer... pizzasID);
+	public abstract Order placeNewOrder(Customer customer, Address address, Map<Pizza, Integer> pizzas);
 	public abstract List<Order> getAllOrders();
 	
 }

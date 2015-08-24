@@ -36,7 +36,7 @@ public class AccumulativeCardService {
 	}
 
 	/**
-	 * Get accumulative card for given customer.
+	 * Get accumulative card for given customer and update current address.
 	 * If accumulative card does not exist - create it.
 	 * 
 	 * @param customer
@@ -50,6 +50,8 @@ public class AccumulativeCardService {
 	        accumulativeCard = customer.getAccumulativeCard();
 	        if (accumulativeCard == null) {
 	        	accumulativeCard = createNewAccumulativeCard(customer, address);
+	        } else if (accumulativeCard.getAddress() != null && !accumulativeCard.getAddress().equals(address)){
+	        	accumulativeCard.setAddress(address);
 	        }
         }
 		

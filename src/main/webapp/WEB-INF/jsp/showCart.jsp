@@ -71,7 +71,11 @@
 						</tbody>
 					</table>
 						
-					<form action="checkout" method="post" >
+					<form class="form-group" action="checkout" method="post" >
+						
+						Street: <input class="form-control" type="text" name="street" value="<c:out value="${customer.accumulativeCard.address.street }"/>"><br>
+						House number: <input class="form-control" type="text" name="houseNumber" value="<c:out value="${customer.accumulativeCard.address.houseNumber }"/>"><br>
+					
 						<sec:csrfInput/>
 						<button type="submit" class="btn btn-default">Checkout</button>
 					</form>
