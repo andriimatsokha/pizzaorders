@@ -35,7 +35,11 @@ public class PizzaServiceImpl implements PizzaService {
 	 */
 	@Override
 	public void save(Pizza pizza) {
-		pizzaRepository.update(pizza);
+		if (pizza.getId() == null) {
+			pizzaRepository.savePizza(pizza);
+		} else {
+			pizzaRepository.update(pizza);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -44,7 +48,6 @@ public class PizzaServiceImpl implements PizzaService {
 	@Override
 	public void delete(Integer pizzaId) {
 		pizzaRepository.delete(pizzaId);
-		
 	}
-	
+
 }

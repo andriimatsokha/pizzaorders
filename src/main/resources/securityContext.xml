@@ -28,6 +28,13 @@
 		Returns true if the user is not an anonymous or a remember-me user 
 -->
 
+	<http pattern="/rest/**" create-session="stateless">
+        <intercept-url pattern='/**' access="hasRole('USER')" />
+        <!-- <intercept-url pattern='/**' access="permitAll" /> -->
+        <http-basic />
+        <csrf disabled="true"/>
+    </http>
+
 	<http>
 		<intercept-url pattern="/*" access="permitAll"/>
 		<intercept-url pattern="/order/**" access="hasAnyRole('USER', 'ADMIN')"/>
@@ -35,6 +42,8 @@
 		<form-login default-target-url="/order/pizza/select" always-use-default-target="true"/>
 		<logout logout-success-url="/"/>
 	</http>
+	
+	
 	
 	
 

@@ -14,7 +14,7 @@ public class ExceptionHandlingController {
 	@ExceptionHandler(RuntimeException.class)
 	public ModelAndView generalException(Exception exception) {
 		
-		logger.error(exception);
+		logger.error("Default exception handler", exception);
 		
 		ModelAndView mav = new ModelAndView();
 	    mav.addObject("exception", exception);
